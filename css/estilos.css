@@ -1,0 +1,106 @@
+body{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin: 0;
+    padding: 0;
+    background-image: url("https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/slats-v-jenna-guthrie.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* Ajusta el tamaño de la imagen para cubrir todo el espacio */
+    background-position: center center;
+    /* Centra la imagen en el cuerpo */
+    color: #ffffff;
+    padding: 0%;
+    height: 150vh;
+}
+
+a{
+    text-decoration: none;
+    color: aliceblue;
+}
+
+header{
+    display: flex;
+    min-height: 70px;
+    background-color: coral;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+}
+
+.logo-img{
+    height: 80px;
+    margin-right: 10px;
+}
+
+#menu {
+    display: none;
+}
+
+.menu-icono {
+    width: 25px;
+}
+
+label{
+    cursor: pointer;
+    display: none;
+}
+
+nav a{
+    font-weight: 600;
+    padding-right: 10px;
+}
+
+nav a:hover{
+    color: #a7bed9;
+}
+
+@media (max-width: 700px) {
+    header{
+        flex-direction: column;
+    }
+
+    nav{
+        padding: 10px 0px;
+    }
+
+    .menu {
+        padding: 30px;
+        margin: 0;
+    }
+
+    label {
+        display: initial;
+    }
+
+    .menu {
+        position: absolute;
+        top: 26%;
+        left: 0;
+        right: 0;
+        margin: auto;
+        background-color: rgb(255, 127, 80);
+        display: none;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .menu a{
+        display: block;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .item {
+        margin: 0 0 20px 0;
+        width: 100%;
+    }
+
+    #menu:checked ~ .menu {
+        display: flex;
+    }
+}
