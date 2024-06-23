@@ -35,9 +35,9 @@ header{
     z-index: 1000;
 }
 
-.espaciador {
+/* .espaciador {
     height: 70px;
-}
+} */
 
 .contenido {
     display: flex;
@@ -104,7 +104,7 @@ nav a:hover{
     display: none;
     position: absolute;
     text-align: center;
-    background-color: #f9f9f9;
+    background-color: #cac6c6;
     min-width: 160px;
     z-index: 1;
 }
@@ -198,44 +198,48 @@ nav a:hover{
     }
 }
 
-.contenido {
+.primera-seccion {
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: right; /* Mueve el fondo al borde derecho */
+    background-position: top; /* Mueve el fondo al borde derecho */
     margin: 0; /* Elimina márgenes */
     padding: 0; /* Elimina relleno */
     display: flex; /* Opcional: para centrar el contenido */
     justify-content: center; /* Opcional: para centrar el contenido horizontalmente */
     align-items: center; /* Opcional: para centrar el contenido verticalmente */
-    width: 100vw;
-    background-color:rgb(230, 220, 212);
+    width: auto;
+    height: auto;
+    background-color: rgb(230, 220, 212);
+    position: absolute;
 }
 
 .presentacion {
-    display: block;
     min-height: 70px;
+    justify-content: left; /* Opcional: para centrar el contenido horizontalmente */
     background-color: rgb(230, 220, 212);
-    padding: 50px;
-    position: initial;
     top: 10;
     left: 0;
-    right: 0;
-    margin-top: 70px;
+    right: 0;    
 }
 
 .img-presentacion {
     border-radius: 5%;
+    justify-content: left; /* Opcional: para centrar el contenido horizontalmente */
+    align-items: start;
     
 }
 
 .contenido {
     display: flex;
     margin: 60px;
+    border-right: 5px solid black;
 }
 
 .articulos {
     text-align: center;
     border-bottom: 5px solid black;
+    background-color: red;
+
 }
 
 
