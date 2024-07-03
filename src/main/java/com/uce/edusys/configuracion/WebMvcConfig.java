@@ -11,6 +11,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**") // URL que se utilizará para acceder a los recursos estáticos
-                .addResourceLocations("classpath:/static/"); // Ubicación física de los recursos estáticos dentro de src/main/resources/
+                .addResourceLocations("classpath:/static/"); // Ubicación física de los recursos estáticos dentro de
+                                                             // src/main/resources/
     }
 }

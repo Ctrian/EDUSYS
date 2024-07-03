@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="with=device-width, initial-scale = 1.0 ">
+    <title>Liceo Central </title>
+    <link rel="stylesheet" href="/static/css/estilos.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <section class="header">
+        <nav>
+            <a href="/menu/botones"><img src="/images/logotipo.png"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <!-- <li><a href="home.html"> HOME</a></li>        -->
+                    <!-- <li><a href=""> SERVICIOS</a></li> -->
+                    <li><a href=""> CLUBES</a></li>
+                    <li><a href="/contactos/contactar"> CONTACTO</a></li>
+                    <li><a href="/representantes/space"> PADRES</a></li>
+                    <li><a href="/estudiantes/space"> ESTUDIANTES</a></li>
+                    <li><a href="/personal/space"> PERSONAL</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <div class="text-box">
+            <h1>LICEO CENTRAL DE CIENCIAS Y ARTE</h1>
+            <br />
+            <p>Ofrecemos una educación integral fomentando el crecimiento académico,
+                <br> emocional y social de nuestros estudiantes
+            </p>
+            <br />
+            <a href="/matriculas/formulario" class="hero-btn">INSCRÍBETE</a>
+        </div>
+    </section>
+    <!----------------- Mision Vision------------------->
+    <section class="misionVision">
+        <div class="misionVision-colum">
+            <h1>Misión</h1>
+            <p>El Colegio Liceo Central, conjuntamente con los padres de familia, tiene como misión educar a
+                sus hijas personal e integralmente, a través del ejercicio de virtudes y de los valores,
+                en un ambiente de libertad y responsabilidad, para que sean personas exitosas, seguras, estables,
+                que sepan servir y amar a los demás y que se sientan comprometidas con el bienestar común.</p>
+        </div>
+        <div class="misionVision-colum">
+            <h1>Visión</h1>
+            <p>El Colegio Liceo Central deberá ser un colegio de excelencia académica reconocida nacional e
+                internacionalmente,
+                en el que los padres de familia, directivos, profesoras y demás miembros de la comunidad educativa,
+                integren un equipo sólidamente unido y profesionalmente preparado para cumplir su misión,
+                inculcando en las estudiantes una participación consciente y activa en su proceso de formación como
+                líderes
+                y agentes de cambio social.</p>
+        </div>
+    </section>
+    <!----------------- OFERTA ACADÉMICA------------------->
+    <section class="cursos">
+        <h1>Oferta Académica</h1>
+        <p>Conoce más sobre nuestra oferta académica.</p>
+
+        <div class="filas">
+            <div class="cursos-colum">
+                <h3>EGB SUPERIOR Y BACHILLERATO</h3>
+                <p>El nivel de Educación General Superior en Quito abarca desde octavo hasta décimo grado; el
+                    Bachillerato General Unificado incluye
+                    desde primero hasta tercer grado.
+                    <br> En estos niveles nuestros alumnos consolidan las destrezas de pensamiento, progresan en sus
+                    conocimientos de las distintas áreas del conocimiento y maduran en la práctica de virtudes,
+                    autonomía y habilidades sociales.
+                </p>
+            </div>
+            <div class="cursos-colum">
+                <h3>BACHILLERATO <br> INTERNACIONAL</h3>
+                <p>El Programa del Diploma IB es un currículo exigente y estimulante de 2 años de duración que inicia en
+                    segundo grado de bachillerato.
+                    Este programa anima a plantear interrogantes complejos, aprender a aprender, desarrollar una fuerte
+                    identidad personal y cultural, así como la capacidad de comprender a personas de otros países y
+                    culturas.
+                    <br> El título que otorga está reconocido por prestigiosas universidades de todo el mundo.
+                </p>
+            </div>
+            <div class="cursos-colum">
+                <h3>DIPLOMA <br> DUAL</h3>
+                <p>El Diploma Dual es el programa oficial de convalidación internacional de títulos de bachillerato que
+                    permite a los alumnos obtener dos titulaciones
+                    simultáneas: la propia de Ecuador y el American High School.
+                    <br> El Programa Dual cuenta con una red educativa internacional con más de 20.000 alumnos en 19
+                    países del mundo, entre ellos:
+                    España, Francia, Italia, Argentina, Colombia, Ecuador, Perú, Venezuela, México, Chile, Corea, China
+                    y más.
+                </p>
+            </div>
+        </div>
+
+    </section>
+    <!----------------- CLUBES------------------->
+    <section class="clubes">
+        <h1>Nuestros Clubes</h1>
+        <p>Actividades extracurriculares que van de la mano con el Proyecto Educativo, encaminadas a potenciar la
+            formación integral de los alumnos.</p>
+
+        <div class="filas">
+            <div class="clubes-colum">
+                <img src="/images/clubTeatro.jpg" alt="">
+                <div class="layer">
+                    <h3>TEATRO</h3>
+                </div>
+            </div>
+            <div class="clubes-colum">
+                <img src="/images/clubDeportes.jpeg" alt="">
+                <div class="layer">
+                    <h3>DEPORTES</h3>
+                </div>
+            </div>
+            <div class="clubes-colum">
+                <img src="/images/clubONU.jpg" alt="">
+                <div class="layer">
+                    <h3>ONU</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!----------------- NUESTROS SERVICIOS------------------->
+    <section class="servicios">
+        <h1>Nuestros Sericios</h1>
+        <p>Ofrecemos diferentes tipos de servicio para nuestros alumnos.</p>
+        <div class="filas">
+            <div class="servicios-colum">
+                <img src="/images/transporte.jpg" alt="">
+                <h3>TRANSPORTE</h3>
+                <p>El servicio en el recorrido es un servicio puerta a puerta en la medida de lo posible.
+                    <br> Los recorridos van dentro de la ciudad y a los valles de Tumbaco, los Chillos y a la Mitad del
+                    Mundo.
+                </p>
+            </div>
+            <div class="servicios-colum">
+                <img src="/images/comedor.jpg" alt="">
+                <h3>COMEDOR</h3>
+                <p>Contamos con un Nutricionista el cual elabora un menú balanceado acorde a las distintas edades de las
+                    niñas.
+                    Nuestras instalaciones constan con un adecuado diseño y equipamiento para brindar el mejor servicio.
+                </p>
+            </div>
+            <div class="servicios-colum">
+                <img src="/images/enfermeria.jpg" alt="">
+                <h3>ENFERMERÍA</h3>
+                <p>El consultorio médico está comprometido con brindar un servicio de excelente calidad a nuestros
+                    alumnos.
+                    Atendemos desde el inicio de la jornada, hasta el fin de la misma.</p>
+            </div>
+        </div>
+    </section>
+    <!-----------------INSCRIPCIÓN------------------->
+    <section class="inscripcion">
+        <h1>Forma parte de nuestro alumnado.</h1>
+        <a href="/matriculas/formulario" class="hero-btn">INSCRÍBETE</a>
+
+    </section>
+    <!-----------------FOOTER------------------->
+    <section class="footer">
+        <h4> NOSOSTROS</h4>
+        <p>
+            Somos una institución dedicada a proporcionar una educación integral y de alta calidad.
+            <br> Nuestro compromiso es con la formación de estudiantes preparados para enfrentar los retos del futuro.
+        </p>
+        <div class="icons">
+            <i class="fa fa-facebook"></i>
+            <i class="fa fa-twitter"></i>
+            <i class="fa fa-instagram"></i>
+            <i class="fa fa-linkedin"></i>
+        </div>
+
+    </section>
+    <!-----------------JavaScript para el Menu-------------->
+
+    <script>
+        var navLinks = document.getElementById("navLinks"); I
+        function showMenu() {
+            navLinks.style.right = "0";
+        }
+        function hideMenu() {
+            navLinks.style.right = "-200px";
+        }
+    </script>
+
+</body>
+
+</html>

@@ -53,15 +53,15 @@ public class Estudiante {
 	@JoinColumn(name = "estu_id_representante")
 	private Representante representante;
 
+	@OneToMany(mappedBy = "estudiante")
+	private List<Matricula> matriculas;
+
 	@OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL)
 	private List<Estu_Enfe> estu_Enfes;
 
 	@OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL)
 	private List<Estu_Bibl> estu_Bibls;
 
-	@OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL)
-	private List<Matricula> matriculas;
-//
 //	///////////////////////////////////////////////////////////////
 //
 //	@OneToOne(mappedBy = "estudiante", cascade = CascadeType.ALL)
@@ -110,6 +110,62 @@ public class Estudiante {
 
 	public void setGenero(String genero) {
 		this.genero = genero;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public Representante getRepresentante() {
+		return representante;
+	}
+
+	public void setRepresentante(Representante representante) {
+		this.representante = representante;
+	}
+
+	public List<Matricula> getMatriculas() {
+		return matriculas;
+	}
+
+	public void setMatriculas(List<Matricula> matriculas) {
+		this.matriculas = matriculas;
+	}
+
+	public List<Estu_Enfe> getEstu_Enfes() {
+		return estu_Enfes;
+	}
+
+	public void setEstu_Enfes(List<Estu_Enfe> estu_Enfes) {
+		this.estu_Enfes = estu_Enfes;
+	}
+
+	public List<Estu_Bibl> getEstu_Bibls() {
+		return estu_Bibls;
+	}
+
+	public void setEstu_Bibls(List<Estu_Bibl> estu_Bibls) {
+		this.estu_Bibls = estu_Bibls;
 	}
 
 	// toString

@@ -6,12 +6,15 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "representante")
@@ -23,43 +26,51 @@ public class Representante {
 	@Column(name = "repr_id")
 	private Integer id;
 
+	@NotEmpty
 	@Column(name = "repr_cedula")
 	private String cedula;
 
+	@NotEmpty
 	@Column(name = "repr_nombre")
 	private String nombre;
 
+	@NotEmpty
 	@Column(name = "repr_apellido")
 	private String apellido;
 
-	@Column(name = "repr_correo_electronico")
-	private String correoElectronico;
+	@NotEmpty
+	@Email
+	@Column(name = "repr_email")
+	private String email;
 
-	@Column(name = "repr_fecha_nacimiento")
-	private LocalDateTime fechaNacimiento;
+	@Column(name = "repr_fecha_login")
+	private LocalDateTime fechaLogin = LocalDateTime.now();
 
+	@NotEmpty
 	@Column(name = "repr_direccion")
 	private String direccion;
 
+	@NotEmpty
 	@Column(name = "repr_telefono")
 	private String telefono;
 
 	// cifrado RSA
 
-	@Column(name = "repr_normal_password")
-	private String normalPassword;
-
-	@Column(name = "repr_encrypted_password")
-	private String encryptedPassword;
+	@NotEmpty
+	@Column(name = "repr_password")
+	private String password;
 
 	// relaciones
-	@OneToMany(mappedBy = "representante", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "representante", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	private List<Estudiante> estudiantes;
 
-	@OneToMany(mappedBy = "representante", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "representante", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	private List<Matricula> matriculas;
+
+	@OneToMany(mappedBy = "representante", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	private List<Transferencia> transferencias;
 
-	@OneToMany(mappedBy = "representante", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "representante", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
 	private List<Repre_Conta> repre_Contas;
 
 	// get y set
@@ -93,22 +104,6 @@ public class Representante {
 
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
-	}
-
-	public String getCorreoElectronico() {
-		return correoElectronico;
-	}
-
-	public void setCorreoElectronico(String correoElectronico) {
-		this.correoElectronico = correoElectronico;
-	}
-
-	public LocalDateTime getFechaNacimiento() {
-		return fechaNacimiento;
-	}
-
-	public void setFechaNacimiento(LocalDateTime fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
 	}
 
 	public String getDireccion() {
@@ -150,21 +145,37 @@ public class Representante {
 	public void setRepre_Contas(List<Repre_Conta> repre_Contas) {
 		this.repre_Contas = repre_Contas;
 	}
-
-	public String getNormalPassword() {
-		return normalPassword;
+	
+	public String getEmail() {
+		return email;
 	}
 
-	public void setNormalPassword(String normalPassword) {
-		this.normalPassword = normalPassword;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public String getEncryptedPassword() {
-		return encryptedPassword;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setEncryptedPassword(String encryptedPassword) {
-		this.encryptedPassword = encryptedPassword;
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public LocalDateTime getFechaLogin() {
+		return fechaLogin;
+	}
+
+	public void setFechaLogin(LocalDateTime fechaLogin) {
+		this.fechaLogin = fechaLogin;
+	}
+
+	public List<Matricula> getMatriculas() {
+		return matriculas;
+	}
+
+	public void setMatriculas(List<Matricula> matriculas) {
+		this.matriculas = matriculas;
 	}
 	
 	// toString

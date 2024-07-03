@@ -14,14 +14,14 @@ public interface IRepresentanteRepository {
 
 	public void eliminar(Integer id);
 
-    // encontrar por cédula
-    public Representante encontrarPorCedula(String cedula);
+    // encontrar por email
+    public Representante encontrarPorEmail(String email);
 
     // encontrar la lista de representados
     public List<Representante> encontrarPorCedulaRepresentados(String cedula);
 
     // encontrar todos los representantes
-    public List<Representante> encontrarRepresentantesTodos();
+    public List<Representante> encontrarTodos();
 
     // encontrar todos los pagos
     public List<Representante> encontrarPagosRepresentante(String cedula);

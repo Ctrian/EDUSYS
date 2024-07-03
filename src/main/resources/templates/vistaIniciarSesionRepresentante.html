@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="with=device-width, initial-scale = 1.0 ">
+  <title>Inicio de Sesión </title>
+  <link rel="stylesheet" href="/static/css/estilos.css">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" /> -->
+</head>
+
+<body>
+  <section class="inicioSesion-header">
+    <nav>
+      <a href="/menu/botones"><img src="/images/logotipo.png"></a>
+      <h3>LICEO CENTRAL DE CIENCIAS Y ARTE</h3>
+    </nav>
+  </section>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h1 class="mb-0 text-center">Inicio de Sesión</h1>
+            <p class="text-center text-muted">
+              Ingresa tus datos para acceder a tu cuenta.
+            </p>
+          </div>
+          <div class="card-body">
+            <form th:action="@{/representantes/cuentaR}" th:method="POST">
+              <div class="mb-3">
+                <label for="email" class="form-label">Correo electrónico</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="ejemplo@dominio.com" required />
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" id="password" name="password" class="form-control" required />
+              </div>
+
+              <div class="mt-4 text text-sm">
+                <a href="/representantes/fPassword" class="underline">¿Olvidaste tu contraseña?</a>
+                <p></p>
+                <p></p>
+              </div>
+
+              <div th:if="${param.error}">
+                <div class="alert alert-danger" role="alert">
+                  Error en el inicio de sesión. Verifica tus credenciales.
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100">
+                Iniciar Sesión
+              </button>
+            </form>
+
+            <div class="mt-4 text-center text-sm">
+              ¿No tienes una cuenta?
+              <a href="/representantes/signUp" class="underline">Regístrate</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-----------------FOOTER------------------->
+  <section class="footer">
+    <h4> NOSOSTROS</h4>
+    <p>
+      Somos una institución dedicada a proporcionar una educación integral y de alta calidad.
+      <br> Nuestro compromiso es con la formación de estudiantes preparados para enfrentar los retos del futuro.
+    </p>
+    <div class="icons">
+      <i class="fa fa-facebook"></i>
+      <i class="fa fa-twitter"></i>
+      <i class="fa fa-instagram"></i>
+      <i class="fa fa-linkedin"></i>
+    </div>
+
+  </section>
+</body>
+
+</html>

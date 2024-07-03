@@ -12,7 +12,7 @@ public class MenuController {
 	// http://localhost:8080/menu/botones
 	@GetMapping("/botones")
 	public String vistaMenu() {
-		return "vistaMenuGeneral";
+		return "home";
 	}
 	
 }

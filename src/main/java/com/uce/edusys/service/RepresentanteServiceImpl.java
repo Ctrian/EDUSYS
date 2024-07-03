@@ -1,6 +1,10 @@
 package com.uce.edusys.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.uce.edusys.repository.modelo.Representante;
@@ -11,7 +15,7 @@ import com.uce.edusys.repository.IRepresentanteRepository;
 public class RepresentanteServiceImpl implements IRepresentanteService {
 
     @Autowired
-    private IRepresentanteRepository iRepresentanteRepository;
+    public IRepresentanteRepository iRepresentanteRepository;
 
     @Override
     public void registrarR(Representante representante) {
@@ -34,8 +38,25 @@ public class RepresentanteServiceImpl implements IRepresentanteService {
     }
 
     @Override
-    public Representante encontrarPorCedula(String cedula) {
-        return this.iRepresentanteRepository.encontrarPorCedula(cedula);
+    public Representante encontrarPorEmail(String email) {
+        return this.iRepresentanteRepository.encontrarPorEmail(email);
+    }
+
+    @Override
+    public List<Representante> encontrarPorCedulaList(String cedula) {
+        throw new UnsupportedOperationException("Unimplemented method 'encontrarPorCedulaList'");
+    }
+
+    @Override
+    public List<Representante> encontrarTodos() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+    }
+
+    @Override
+    public Page<Representante> encontrarTodos(Pageable pageable) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
     }
     
 }

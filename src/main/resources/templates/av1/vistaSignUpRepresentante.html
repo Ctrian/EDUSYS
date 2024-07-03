@@ -1,26 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
-  <meta name="viewport" content="with=device-width, initial-scale = 1.0 ">
-  <title>Crear cuenta </title>
-  <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/static/css/estilos.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" /> -->
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <title>Crear cuenta</title>
 </head>
 
 <body>
-  <section class="crearCuenta-header">
-    <nav>
-      <a href="/menu/botones"><img src="/images/logotipo.png "></a>
-      <h3>LICEO CENTRAL DE CIENCIAS Y ARTE</h3>
-    </nav>
-  </section>
   <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-md-6">
@@ -50,7 +43,6 @@
                 <label for="cedula" class="form-label">Cédula</label>
                 <input type="text" id="cedula" class="form-control" placeholder="Ingresa tu cédula" name="cedula"
                   maxlength="10" pattern="\d{10}" th:field="${representante.cedula}" required />
-                <small id="mensajeCedula" class="text-danger"></small>
               </div>
               <div class="mb-3">
                 <label for="email" class="form-label">Correo electrónico</label>
@@ -69,9 +61,8 @@
               </div>
               <div class="mb-3">
                 <label for="password" class="form-label">Contraseña</label>
-                <input type="password" id="password" name="password" class="form-control"
-                  placeholder="Ingresa tu contraseña" minlength="6" maxlength="20" th:field="${representante.password}"
-                  required />
+                <input type="password" id="password" name="password" class="form-control" placeholder="Ingresa tu contraseña"
+                  minlength="6" maxlength="20" th:field="${representante.password}" required />
               </div>
               <div class="mb-3">
                 <button type="submit" class="btn btn-primary w-100">Guardar</button>
@@ -103,40 +94,7 @@
 
               document.getElementById('cedula').addEventListener('input', function (e) {
                 this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
-
-                const cedula = e.target.value;
-                const mensajeCedula = document.getElementById('mensajeCedula');
-                const regexCedula = /^\d{10}$/;
-
-                if (!regexCedula.test(cedula)) {
-                  mensajeCedula.textContent = 'Ingrese correctamente el número de cédula (10 dígitos numéricos)';
-                } else {
-                  if (!validarCedulaEcuatoriana(cedula)) {
-                    mensajeCedula.textContent = 'Ingrese una cédula válida ecuatoriana';
-                  } else {
-                    mensajeCedula.textContent = '';
-                  }
-                }
               });
-
-              function validarCedulaEcuatoriana(cedula) {
-                if (cedula.length !== 10) {
-                  return false;
-                }
-
-                const coeficientes = [2, 1, 2, 1, 2, 1, 2, 1, 2];
-                let suma = 0;
-
-                for (let i = 0; i < coeficientes.length; i++) {
-                  let valor = parseInt(cedula.charAt(i)) * coeficientes[i];
-                  suma += (valor >= 10) ? valor - 9 : valor;
-                }
-
-                const digitoVerificador = parseInt(cedula.charAt(9));
-                const resultado = (suma % 10 === 0) ? 0 : 10 - (suma % 10);
-
-                return resultado === digitoVerificador;
-              }
 
               document.getElementById('telefono').addEventListener('input', function (e) {
                 this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
@@ -148,14 +106,14 @@
                 const apellido = document.getElementById('apellido').value;
                 const telefono = document.getElementById('telefono').value;
 
-                const mensajeErrorCedula = "Ingrese solo números en total 10 y deben conformar un ID ecuatoriano";
+                const mensajeErrorCedula = "Ingrese solo números en total 10";
                 const mensajeErrorTelefono = "Ingrese un número de teléfono de 10 dígitos";
                 const mensajeErrorNombre = "Ingrese solo letras y espacios en el nombre";
                 const mensajeErrorApellido = "Ingrese solo letras y espacios en el apellido";
 
                 const regexSoloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/;
 
-                if (!/^\d{10}$/.test(cedula) || !validarCedulaEcuatoriana(cedula)) {
+                if (!/^\d{10}$/.test(cedula)) {
                   alert(mensajeErrorCedula);
                   return false;
                 }
@@ -196,21 +154,6 @@
       </div>
     </div>
   </div>
-  <!-----------------FOOTER------------------->
-  <section class="footer">
-    <h4> NOSOSTROS</h4>
-    <p>
-      Somos una institución dedicada a proporcionar una educación integral y de alta calidad.
-      <br> Nuestro compromiso es con la formación de estudiantes preparados para enfrentar los retos del futuro.
-    </p>
-    <div class="icons">
-      <i class="fa fa-facebook"></i>
-      <i class="fa fa-twitter"></i>
-      <i class="fa fa-instagram"></i>
-      <i class="fa fa-linkedin"></i>
-    </div>
-
-  </section>
 </body>
 
 </html>

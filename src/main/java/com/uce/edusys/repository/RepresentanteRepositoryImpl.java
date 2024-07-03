@@ -2,16 +2,18 @@ package com.uce.edusys.repository;
 
 import java.util.List;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import com.uce.edusys.repository.modelo.Representante;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
-    
+@Primary
 @Repository
 @Transactional
 
@@ -42,11 +44,15 @@ public class RepresentanteRepositoryImpl implements IRepresentanteRepository {
     }
 
     @Override
-    public Representante encontrarPorCedula(String cedula) {
+    public Representante encontrarPorEmail(String email) {
         TypedQuery<Representante> query = this.entityManager
-				.createQuery("SELECT e FROM Cliente e WHERE e.cedula = :datoCedula", Representante.class);
-		query.setParameter("datoCedula", cedula);
-		return query.getSingleResult();
+                .createQuery("SELECT e FROM Representante e WHERE e.email=:datoEmail", Representante.class);
+        query.setParameter("datoEmail", email);
+        List<Representante> results = query.getResultList();
+        if (results.isEmpty()) {
+            return null;
+        }
+        return results.get(0);
     }
 
     @Override
@@ -55,13 +61,13 @@ public class RepresentanteRepositoryImpl implements IRepresentanteRepository {
     }
 
     @Override
-    public List<Representante> encontrarRepresentantesTodos() {
-        throw new UnsupportedOperationException("Unimplemented method 'encontrarRepresentantesTodos'");
+    public List<Representante> encontrarTodos() {
+        Query query = this.entityManager.createQuery("SELECT r FROM Representante r", Representante.class);
+		return query.getResultList();
     }
 
     @Override
     public List<Representante> encontrarPagosRepresentante(String cedula) {
         throw new UnsupportedOperationException("Unimplemented method 'encontrarPagosRepresentante'");
     }
-
 }
