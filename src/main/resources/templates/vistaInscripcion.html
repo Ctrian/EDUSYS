@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="with=device-width, initial-scale = 1.0 ">
     <title>Inscripcion</title>
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/estilos.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -38,25 +36,26 @@
                                 <input type="text" id="nombre" class="form-control"
                                     onkeypress="return soloLetras(event);" placeholder="Ingresa tu nombre" name="nombre"
                                     maxlength="20" pattern="^[a-zA-Z\s]{2,254}"
-                                    th:field="${matricula.representante.nombre}" required />
+                                    th:field="${matricula.nombreRepresentante}" required />
                             </div>
                             <div class="mb-3">
                                 <label for="cedula" class="form-label">Cédula</label>
                                 <input type="text" id="cedula" class="form-control" placeholder="Ingresa tu cédula"
                                     name="cedula" maxlength="10" pattern="\d{10}"
-                                    th:field="${matricula.representante.cedula}" required />
+                                    th:field="${matricula.cedulaRepresentante}" required />
                                 <small id="mensajeCedula" class="text-danger"></small>
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Correo electrónico</label>
                                 <input type="email" id="email" name="email" class="form-control"
-                                    placeholder="ejemplo@dominio.com" th:field="${matricula.representante.email}"
+                                    placeholder="ejemplo@dominio.com" th:field="${matricula.emailRepresentante}"
                                     required />
+                                <small id="mensajeEmail" class="text-danger"></small>
                             </div>
                             <div class="mb-3">
                                 <label for="telefono" class="form-label">Teléfono</label>
                                 <input type="tel" id="telefono" class="form-control" placeholder="Ingresa tu teléfono"
-                                    maxlength="10" pattern="\d{10}" th:field="${matricula.representante.telefono}"
+                                    maxlength="10" pattern="\d{10}" th:field="${matricula.telefonoRepresentante}"
                                     required />
                             </div>
                             <div class="mb-3">
@@ -64,38 +63,40 @@
                                 <input type="text" id="rep_profession" class="form-control"
                                     onkeypress="return soloLetras(event);"
                                     placeholder="Ingresa tu actividad profesional" name="descrp-prof" maxlength="40"
-                                    required />
+                                    th:field="${matricula.actividadRepresentante}" required />
                             </div>
                             <div class="mb-3">
                                 <label for="rep_workplace" class="form-label">Lugar de Trabajo</label>
                                 <input type="text" id="rep_workplace" class="form-control"
                                     onkeypress="return soloLetras(event);" placeholder="Ingresa tu lugar de trabajo"
-                                    name="w-place" maxlength="40" required />
+                                    name="w-place" maxlength="40" th:field="${matricula.lugarRepresentante}" required />
                             </div>
 
                             <h2 class="mb-3 mt-4">Datos del Hijo</h2>
                             <div class="mb-3">
-                                <label for="nombre" class="form-label">Nombre</label>
-                                <input type="text" id="nombre" class="form-control"
-                                    onkeypress="return soloLetras(event);" placeholder="Ingresa tu nombre" name="nombre"
-                                    maxlength="20" pattern="^[a-zA-Z\s]{2,254}"
-                                    th:field="${matricula.estudiante.nombre}" required />
+                                <label for="nombre_hijo" class="form-label">Nombre</label>
+                                <input type="text" id="nombre_hijo" class="form-control"
+                                    onkeypress="return soloLetras(event);" placeholder="Ingresa su nombre" name="nombre"
+                                    maxlength="20" pattern="^[a-zA-Z\s]{2,254}" th:field="${matricula.nombreEstudiante}"
+                                    required />
                             </div>
                             <div class="mb-3">
                                 <label for="child_birthdate" class="form-label">Fecha de Nacimiento</label>
-                                <input type="date" id="child_birthdate" name="child_birthdate" minlength="27-06-2024"
-                                    maxlength="27-10-2024" class="form-control" required />
+                                <input type="date" id="child_birthdate" name="child_birthdate" minlength="27-06-2004"
+                                    maxlength="27-10-2024" class="form-control" th:field="${matricula.bdEstudiante}"
+                                    required />
                             </div>
                             <div class="mb-3">
-                                <label for="cedula" class="form-label">Cédula</label>
-                                <input type="text" id="cedula_hijo" class="form-control" placeholder="Ingresa tu cédula"
-                                    name="cedula" maxlength="10" pattern="\d{10}"
-                                    th:field="${matricula.estudiante.cedula}" required />
+                                <label for="cedula_hijo" class="form-label">Cédula</label>
+                                <input type="text" id="cedula_hijo" class="form-control" placeholder="Ingresa su cédula"
+                                    name="cedula_hijo" maxlength="10" pattern="\d{10}"
+                                    th:field="${matricula.cedulaEstudiante}" required />
                                 <small id="mensajeCedulaHijo" class="text-danger"></small>
                             </div>
                             <div class="mb-3">
                                 <label for="child_grade" class="form-label">Grado, Curso o Nivel</label>
-                                <select id="child_grade" class="form-select" required>
+                                <select id="child_grade" class="form-select" th:field="${matricula.gradeEstudiante}"
+                                    required>
                                     <option value="" disabled selected>Selecciona un grado</option>
                                     <option value="8">8vo Grado</option>
                                     <option value="9">9no Grado</option>
@@ -105,137 +106,138 @@
                                     <option value="13">3ero Bachillerato</option>
                                 </select>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100">Inscribirse</button>
+                            <div class="mb-3">
+                                <button type="submit" class="btn btn-primary w-100">Inscribirse</button>
+                            </div>
                         </form>
-                        <hr class="my-4">
+
+                        <script>
+                            function soloLetras(event) {
+                                var letra = event.keyCode;
+                                // Acepta letras mayúsculas, minúsculas, tecla de retroceso, espacio y acentos
+                                if ((letra >= 65 && letra <= 90) || (letra >= 97 && letra <= 122) || letra === 8 || letra === 32 ||
+                                    (letra >= 192 && letra <= 255) || (letra >= 128 && letra <= 165)) {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
+
+                            function numerosLetras(event) {
+                                var letra = event.keyCode;
+                                // Acepta letras mayúsculas, minúsculas, tecla de retroceso, espacio y acentos
+                                if ((letra >= 65 && letra <= 90) || (letra >= 97 && letra <= 122) || letra === 8 || letra === 32 ||
+                                    (letra >= 192 && letra <= 255) || (letra >= 128 && letra <= 165) || (letra >= 48 && letra <= 57) || letra === 45) {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            }
+
+                            function validarCedulaEcuatoriana(cedula) {
+                                if (cedula.length !== 10) {
+                                    return false;
+                                }
+
+                                const coeficientes = [2, 1, 2, 1, 2, 1, 2, 1, 2];
+                                let suma = 0;
+
+                                for (let i = 0; i < coeficientes.length; i++) {
+                                    let valor = parseInt(cedula.charAt(i)) * coeficientes[i];
+                                    suma += (valor >= 10) ? valor - 9 : valor;
+                                }
+
+                                const digitoVerificador = parseInt(cedula.charAt(9));
+                                const resultado = (suma % 10 === 0) ? 0 : 10 - (suma % 10);
+
+                                return resultado === digitoVerificador;
+                            }
+
+                            function validarFormulario() {
+                                const cedula = document.getElementById('cedula').value;
+                                const cedula_hijo = document.getElementById('cedula_hijo').value;
+
+                                const mensajeCedula = document.getElementById('mensajeCedula');
+                                const mensajeCedulaHijo = document.getElementById('mensajeCedulaHijo');
+
+                                const regexCedula = /^\d{10}$/;
+
+                                let esValido = true;
+
+                                if (!regexCedula.test(cedula) || !validarCedulaEcuatoriana(cedula)) {
+                                    mensajeCedula.textContent = 'Ingrese una cédula ecuatoriana válida';
+                                    esValido = false;
+                                } else {
+                                    mensajeCedula.textContent = '';
+                                }
+
+                                if (!regexCedula.test(cedula_hijo) || !validarCedulaEcuatoriana(cedula_hijo)) {
+                                    mensajeCedulaHijo.textContent = 'Ingrese una cédula ecuatoriana válida de su hijo/a';
+                                    esValido = false;
+                                } else {
+                                    mensajeCedulaHijo.textContent = '';
+                                }
+
+                                if (!esValido) {
+                                    alert("Ingrese solo números en total 10 y deben conformar un ID ecuatoriano");
+                                }
+
+                                return esValido;
+                            }
+
+                            document.getElementById('cedula').addEventListener('input', function (e) {
+                                this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
+
+                                const cedula = e.target.value;
+                                const mensajeCedula = document.getElementById('mensajeCedula');
+                                const regexCedula = /^\d{10}$/;
+
+                                if (!regexCedula.test(cedula)) {
+                                    mensajeCedula.textContent = 'Ingrese correctamente el número de cédula (10 dígitos numéricos)';
+                                } else {
+                                    if (!validarCedulaEcuatoriana(cedula)) {
+                                        mensajeCedula.textContent = 'Ingrese una cédula ecuatoriana válida';
+                                    } else {
+                                        mensajeCedula.textContent = '';
+                                    }
+                                }
+                            });
+
+                            document.getElementById('cedula_hijo').addEventListener('input', function (e) {
+                                this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
+
+                                const cedula_hijo = e.target.value;
+                                const mensajeCedulaHijo = document.getElementById('mensajeCedulaHijo');
+                                const regexCedulaHijo = /^\d{10}$/;
+
+                                if (!regexCedulaHijo.test(cedula_hijo)) {
+                                    mensajeCedulaHijo.textContent = 'Ingrese correctamente el número de cédula (10 dígitos numéricos)';
+                                } else {
+                                    if (!validarCedulaEcuatoriana(cedula_hijo)) {
+                                        mensajeCedulaHijo.textContent = 'Ingrese una cédula ecuatoriana válida de su hijo/a';
+                                    } else {
+                                        mensajeCedulaHijo.textContent = '';
+                                    }
+                                }
+                            });
+
+                            document.getElementById('email').addEventListener('input', function (e) {
+                                const email = e.target.value;
+                                const mensajeEmail = document.getElementById('mensajeEmail');
+                                const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                                if (!regexEmail.test(email)) {
+                                    mensajeEmail.textContent = 'Ingrese un correo electrónico válido';
+                                } else {
+                                    mensajeEmail.textContent = '';
+                                }
+                            });
+                        </script>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        function soloLetras(event) {
-            var letra = event.keyCode;
-            // Acepta letras mayúsculas, minúsculas, tecla de retroceso, espacio y acentos
-            if ((letra >= 65 && letra <= 90) || (letra >= 97 && letra <= 122) || letra === 8 || letra === 32 ||
-                (letra >= 192 && letra <= 255) || (letra >= 128 && letra <= 165)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        function numerosLetras(event) {
-            var letra = event.keyCode;
-            // Acepta letras mayúsculas, minúsculas, tecla de retroceso, espacio y acentos
-            if ((letra >= 65 && letra <= 90) || (letra >= 97 && letra <= 122) || letra === 8 || letra === 32 ||
-                (letra >= 192 && letra <= 255) || (letra >= 128 && letra <= 165) || (letra >= 48 && letra <= 57) || letra === 45) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        document.getElementById('cedula').addEventListener('input', function (e) {
-            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
-
-            const cedula = e.target.value;
-            const mensajeCedula = document.getElementById('mensajeCedula');
-            const regexCedula = /^\d{10}$/;
-
-            if (!regexCedula.test(cedula)) {
-                mensajeCedula.textContent = 'Ingrese correctamente el número de cédula (10 dígitos numéricos)';
-            } else {
-                if (!validarCedulaEcuatoriana(cedula)) {
-                    mensajeCedula.textContent = 'Ingrese una cédula ecuatoriana válida';
-                } else {
-                    mensajeCedula.textContent = '';
-                }
-            }
-        });
-
-        document.getElementById('cedula_hijo').addEventListener('input', function (e) {
-            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
-
-            const cedula_hijo = e.target.value;
-            const mensajeCedulaHijo = document.getElementById('mensajeCedulaHijo');
-            const regexCedula = /^\d{10}$/;
-
-            if (!regexCedula.test(cedula_hijo)) {
-                mensajeCedulaHijo.textContent = 'Ingrese correctamente el número de cédula (10 dígitos numéricos)';
-            } else {
-                if (!validarCedulaEcuatoriana(cedula_hijo)) {
-                    mensajeCedulaHijo.textContent = 'Ingrese una cédula ecuatoriana válida';
-                } else {
-                    mensajeCedulaHijo.textContent = '';
-                }
-            }
-        });
-
-        function validarCedulaEcuatoriana(cedula) {
-            if (cedula.length !== 10) {
-                return false;
-            }
-
-            const coeficientes = [2, 1, 2, 1, 2, 1, 2, 1, 2];
-            let suma = 0;
-
-            for (let i = 0; i < coeficientes.length; i++) {
-                let valor = parseInt(cedula.charAt(i)) * coeficientes[i];
-                suma += (valor >= 10) ? valor - 9 : valor;
-            }
-
-            const digitoVerificador = parseInt(cedula.charAt(9));
-            const resultado = (suma % 10 === 0) ? 0 : 10 - (suma % 10);
-
-            return resultado === digitoVerificador;
-        }
-
-        document.getElementById('telefono').addEventListener('input', function (e) {
-            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
-        });
-
-        function validarFormulario() {
-            const cedula = document.getElementById('cedula').value;
-            const cedula_hijo = document.getElementById('cedula_hijo').value;
-            const nombre = document.getElementById('nombre').value;
-            const apellido = document.getElementById('apellido').value;
-            const telefono = document.getElementById('telefono').value;
-
-            const mensajeErrorCedula = "Ingrese solo números en total 10 y deben conformar un ID ecuatoriano";
-            const mensajeErrorCedulaHijo = "Ingrese solo números en total 10 y deben conformar un ID ecuatoriano";
-            const mensajeErrorTelefono = "Ingrese un número de teléfono de 10 dígitos";
-            const mensajeErrorNombre = "Ingrese solo letras y espacios en el nombre";
-            const mensajeErrorApellido = "Ingrese solo letras y espacios en el apellido";
-
-            const regexSoloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/;
-
-            if (!/^\d{10}$/.test(cedula) || !validarCedulaEcuatoriana(cedula) || !validarCedulaEcuatoriana(cedula_hijo)) {
-                alert(mensajeErrorCedula);
-                return false;
-            }
-
-            if (!regexSoloLetras.test(nombre)) {
-                alert(mensajeErrorNombre);
-                return false;
-            }
-
-            if (!regexSoloLetras.test(apellido)) {
-                alert(mensajeErrorApellido);
-                return false;
-            }
-
-            if (!/^\d{10}$/.test(telefono)) {
-                alert(mensajeErrorTelefono);
-                return false;
-            }
-
-            // Aquí redirigimos al usuario después de enviar el formulario
-            window.location.href = "vistaGeneral.html";
-            return true;
-        }
-    </script>
 
     <!-----------------FOOTER------------------->
     <section class="footer">

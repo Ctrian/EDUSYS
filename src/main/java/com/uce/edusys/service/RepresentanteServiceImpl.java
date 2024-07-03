@@ -49,13 +49,11 @@ public class RepresentanteServiceImpl implements IRepresentanteService {
 
     @Override
     public List<Representante> encontrarTodos() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findAll'");
     }
 
     @Override
     public Page<Representante> encontrarTodos(Pageable pageable) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'findAll'");
     }
     

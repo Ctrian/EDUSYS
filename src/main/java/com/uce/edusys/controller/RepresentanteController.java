@@ -1,22 +1,12 @@
 package com.uce.edusys.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.poi.ss.formula.functions.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.session.SessionInformation;
-import org.springframework.security.core.session.SessionRegistry;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,8 +16,6 @@ import com.uce.edusys.paginacion.PageRender;
 import com.uce.edusys.repository.IRepresentanteRepository;
 import com.uce.edusys.repository.modelo.Representante;
 import com.uce.edusys.service.IRepresentanteService;
-
-import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/representantes")

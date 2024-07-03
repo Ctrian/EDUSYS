@@ -1,6 +1,9 @@
 package com.uce.edusys.repository.modelo;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -51,7 +54,8 @@ public class Matricula {
 	private String nombreEstudiante;
 
 	@Column(name = "matr_bd_estu")
-	private LocalDateTime bdEstudiante;
+	// @DateTimeFormat(pattern = "dd/MM/yyyy")
+	private LocalDate bdEstudiante;
 
 	@Column(name = "matr_cedula_estu")
 	private String cedulaEstudiante;
@@ -89,6 +93,86 @@ public class Matricula {
 		this.fecha = fecha;
 	}
 
+	public String getNombreRepresentante() {
+		return nombreRepresentante;
+	}
+
+	public void setNombreRepresentante(String nombreRepresentante) {
+		this.nombreRepresentante = nombreRepresentante;
+	}
+
+	public String getCedulaRepresentante() {
+		return cedulaRepresentante;
+	}
+
+	public void setCedulaRepresentante(String cedulaRepresentante) {
+		this.cedulaRepresentante = cedulaRepresentante;
+	}
+
+	public String getEmailRepresentante() {
+		return emailRepresentante;
+	}
+
+	public void setEmailRepresentante(String emailRepresentante) {
+		this.emailRepresentante = emailRepresentante;
+	}
+
+	public String getTelefonoRepresentante() {
+		return telefonoRepresentante;
+	}
+
+	public void setTelefonoRepresentante(String telefonoRepresentante) {
+		this.telefonoRepresentante = telefonoRepresentante;
+	}
+
+	public String getActividadRepresentante() {
+		return actividadRepresentante;
+	}
+
+	public void setActividadRepresentante(String actividadRepresentante) {
+		this.actividadRepresentante = actividadRepresentante;
+	}
+
+	public String getLugarRepresentante() {
+		return lugarRepresentante;
+	}
+
+	public void setLugarRepresentante(String lugarRepresentante) {
+		this.lugarRepresentante = lugarRepresentante;
+	}
+
+	public String getNombreEstudiante() {
+		return nombreEstudiante;
+	}
+
+	public void setNombreEstudiante(String nombreEstudiante) {
+		this.nombreEstudiante = nombreEstudiante;
+	}
+
+	public String getCedulaEstudiante() {
+		return cedulaEstudiante;
+	}
+
+	public void setCedulaEstudiante(String cedulaEstudiante) {
+		this.cedulaEstudiante = cedulaEstudiante;
+	}
+
+	public String getGradeEstudiante() {
+		return gradeEstudiante;
+	}
+
+	public void setGradeEstudiante(String gradeEstudiante) {
+		this.gradeEstudiante = gradeEstudiante;
+	}
+
+	public Representante getRepresentante() {
+		return representante;
+	}
+
+	public void setRepresentante(Representante representante) {
+		this.representante = representante;
+	}
+
 	public Estudiante getEstudiante() {
 		return estudiante;
 	}
@@ -105,12 +189,12 @@ public class Matricula {
 		this.curso = curso;
 	}
 
-	public Representante getRepresentante() {
-		return representante;
+	public LocalDate getBdEstudiante() {
+		return bdEstudiante;
 	}
 
-	public void setRepresentante(Representante representante) {
-		this.representante = representante;
+	public void setBdEstudiante(LocalDate bdEstudiante) {
+		this.bdEstudiante = bdEstudiante;
 	}
 
 }

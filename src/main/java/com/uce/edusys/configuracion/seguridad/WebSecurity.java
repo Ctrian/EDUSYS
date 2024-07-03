@@ -54,7 +54,7 @@ public class WebSecurity {
         return new ProviderManager(authenticationProvider);
     }
 
-    @SuppressWarnings({ "deprecation" })
+    @SuppressWarnings({ "deprecation", "removal" })
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -89,7 +89,10 @@ public class WebSecurity {
 
                 .logout(logout -> logout
                         .logoutSuccessUrl("/menu/botones?logout=true")
-                        .permitAll());
+                        .permitAll())
+                        
+                .csrf()
+                    .ignoringRequestMatchers("/send-email");
 
         return http.build();
     }

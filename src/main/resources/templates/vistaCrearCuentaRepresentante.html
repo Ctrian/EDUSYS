@@ -6,9 +6,6 @@
   <title>Crear cuenta </title>
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
   <link rel="stylesheet" href="/static/css/estilos.css">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" /> -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -28,8 +25,7 @@
           <div class="card-header">
             <h1 class="mb-0 text-center">Crear cuenta</h1>
             <p class="text-center text-muted">
-              Ingrese sus datos personales para crear su cuenta.
-            </p>
+              Ingrese sus datos personales para crear su cuenta.</p>
           </div>
           <div class="card-body">
             <form id="formularioRepresentante" onsubmit="return validarFormulario()"
@@ -38,7 +34,7 @@
                 <label for="nombre" class="form-label">Nombre</label>
                 <input type="text" id="nombre" class="form-control" onkeypress="return soloLetras(event);"
                   placeholder="Ingresa tu nombre" name="nombre" maxlength="20" pattern="^[a-zA-Z\s]{2,254}"
-                  th:field="${representante.nombre}" required>
+                  th:field="${representante.nombre}" required />
               </div>
               <div class="mb-3">
                 <label for="apellido" class="form-label">Apellido</label>
@@ -156,7 +152,7 @@
                 const regexSoloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/;
 
                 if (!/^\d{10}$/.test(cedula) || !validarCedulaEcuatoriana(cedula)) {
-                  alert(mensajeErrorCedula);
+                  alert("Ingrese solo números en total 10 y deben conformar un ID ecuatoriano");
                   return false;
                 }
 
@@ -176,7 +172,7 @@
                 }
 
                 // Aquí redirigimos al usuario después de enviar el formulario
-                window.location.href = "vistaGeneral.html";
+                window.location.href = "/representantes/login";
                 return true;
               }
             </script>

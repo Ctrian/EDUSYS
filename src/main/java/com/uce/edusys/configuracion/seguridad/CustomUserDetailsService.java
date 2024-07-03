@@ -2,7 +2,6 @@ package com.uce.edusys.configuracion.seguridad;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,8 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import com.uce.edusys.repository.IRepresentanteRepository;
 import com.uce.edusys.repository.RepresentanteRepositoryImpl;
 import com.uce.edusys.repository.modelo.Representante;
-
-import java.util.ArrayList;
 
 import org.slf4j.Logger;
 
