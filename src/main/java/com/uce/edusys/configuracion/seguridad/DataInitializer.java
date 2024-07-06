@@ -1,7 +1,6 @@
 package com.uce.edusys.configuracion.seguridad;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.uce.edusys.repository.modelo.Rol;
@@ -9,8 +8,7 @@ import com.uce.edusys.repository.modelo.Rol;
 import jakarta.annotation.PostConstruct;
 
 @Component
-
-public class DataInitializer{
+public class DataInitializer {
 
     @Autowired
     private IRolRepository iRolRepository;
@@ -24,5 +22,5 @@ public class DataInitializer{
             iRolRepository.save(representanteRole);
         }
     }
-    
+
 }

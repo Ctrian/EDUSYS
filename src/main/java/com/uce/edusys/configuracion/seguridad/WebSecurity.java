@@ -3,19 +3,12 @@ package com.uce.edusys.configuracion.seguridad;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import com.uce.edusys.service.IRepresentanteService;
-import com.uce.edusys.service.RepresentanteServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -28,11 +21,12 @@ public class WebSecurity {
         this.customUserDetailsService = customUserDetailsService;
         this.passwordEncoder = passwordEncoder;
     }
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder);
     }
-         
+
     @SuppressWarnings({ "deprecation", "removal" })
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -58,14 +52,13 @@ public class WebSecurity {
                         .defaultSuccessUrl("/representantes/cuentaR", true)
                         .failureUrl("/representantes/login?error=true")
                         .permitAll())
-                .logout()
-                    .logoutUrl("/logout")
-                // .logoutSuccessUrl("/representantes/login?logout=true")
-                .permitAll()
-                
-            .and()
-                .csrf()
-                .ignoringRequestMatchers("/send-email");
+
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/representantes/login?logout=true")
+                        .permitAll())
+
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/send-email"));
 
         return http.build();
     }

@@ -1,10 +1,8 @@
 package com.uce.edusys.configuracion.seguridad;
 
 import java.util.Collection;
-import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,29 +11,27 @@ import com.uce.edusys.repository.modelo.Representante;
 
 public class CustomUserDetails implements UserDetails {
 
-    private final String email;
-    private final String password;
-    private final Set<? extends GrantedAuthority> authorities;
+    private Representante representante;
 
-    public CustomUserDetails(String email, String password, Set<? extends GrantedAuthority> authorities) {
-        this.email = email;
-        this.password = password;
-        this.authorities = authorities;
+    public CustomUserDetails(Representante representante) {
+        this.representante = representante;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return representante.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getNombre()))
+                .collect(Collectors.toSet());
     }
 
     @Override
     public String getPassword() {
-        return password;
+        return representante.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return email;
+        return representante.getEmail();
     }
 
     @Override
@@ -59,7 +55,7 @@ public class CustomUserDetails implements UserDetails {
     }
 
     // public String getUserName() {
-    //     return representante.getNombre();
+    // return representante.getNombre();
     // }
 
 }

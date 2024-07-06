@@ -2,7 +2,6 @@ package com.uce.edusys.repository;
 
 import java.util.List;
 
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import com.uce.edusys.repository.modelo.Representante;
@@ -53,7 +52,7 @@ public class RepresentanteRepositoryImpl implements IRepresentanteRepository {
             return null;
         }
         System.out.println("Se encontró representante: " + results.get(0).getEmail());
-    return results.get(0);
+        return results.get(0);
     }
 
     @Override
@@ -65,7 +64,7 @@ public class RepresentanteRepositoryImpl implements IRepresentanteRepository {
     @Override
     public List<Representante> encontrarTodos() {
         Query query = this.entityManager.createQuery("SELECT r FROM Representante r", Representante.class);
-		return query.getResultList();
+        return query.getResultList();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.uce.edusys.repository.modelo;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -28,7 +29,7 @@ public class Rol {
     // relaciones
 
     @ManyToMany(mappedBy = "roles")
-    private Set<Representante> representantes;
+    private Set<Representante> representantes = new HashSet<>();
 
     // get y set
 
@@ -40,20 +41,20 @@ public class Rol {
         this.id = id;
     }
 
-    public Set<Representante> getRepresentantes() {
-        return representantes;
-    }
-
-    public void setRepresentantes(Set<Representante> representantes) {
-        this.representantes = representantes;
-    }
-
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Set<Representante> getRepresentantes() {
+        return representantes;
+    }
+
+    public void setRepresentantes(Set<Representante> representantes) {
+        this.representantes = representantes;
     }
 
 }

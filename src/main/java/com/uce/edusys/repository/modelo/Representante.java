@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -18,6 +19,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -78,9 +80,9 @@ public class Representante {
 	@OneToMany(mappedBy = "representante", fetch = FetchType.EAGER)
 	private List<Repre_Conta> repre_Contas;
 
-	@ElementCollection
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "representante_roles", joinColumns = @JoinColumn(name = "representante_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "representante_roles", joinColumns = @JoinColumn(name = "representante_id"), inverseJoinColumns = @JoinColumn(name = "role_id"), uniqueConstraints = @UniqueConstraint(columnNames = {
+			"representante_id", "rol_id" }))
 	private Set<Rol> roles = new HashSet<>();
 
 	// get y set

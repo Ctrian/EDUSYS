@@ -9,8 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,7 +47,7 @@ public class RepresentanteController {
 	@GetMapping("/login")
 	public String vistaRepresentantes() {
 		return "vistaIniciarSesionRepresentante";
-	} 
+	}
 
 	// http://localhost:8080/representantes/cuentaR
 	@GetMapping("/cuentaR")
@@ -132,6 +130,12 @@ public class RepresentanteController {
 		model.addAttribute("page", pageRender);
 
 		return "listar";
+	}
+
+	@PostMapping("/logout")
+	public String SalirRepresentante() {
+	// La lógica de inicio de sesión será manejada por Spring Security
+	return "redirect:/representantes/space";
 	}
 
 }
