@@ -14,85 +14,58 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.uce.edusys.service.IRepresentanteService;
+import com.uce.edusys.service.RepresentanteServiceImpl;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurity {
 
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
+    private final UserDetailsService customUserDetailsService;
+    private final PasswordEncoder passwordEncoder;
 
+    public WebSecurity(UserDetailsService customUserDetailsService, PasswordEncoder passwordEncoder) {
+        this.customUserDetailsService = customUserDetailsService;
+        this.passwordEncoder = passwordEncoder;
+    }
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder);
     }
-
-    @Bean
-    public CustomUserDetailsService customUserDetailsService() {
-        return new CustomUserDetailsService();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService);
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-        return authenticationProvider;
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(
-            UserDetailsService userDetailsService,
-            PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService);
-        authenticationProvider.setPasswordEncoder(passwordEncoder);
-        return new ProviderManager(authenticationProvider);
-    }
-
+         
     @SuppressWarnings({ "deprecation", "removal" })
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests(authorizeRequests -> authorizeRequests
-                        // Permitir el acceso sin autenticación
                         .requestMatchers("/",
                                 "/menu/botones",
-                                "/representantes/login",
-                                "/representantes/signUp",
-                                "/representantes/insertar",
-                                "/representantes/cuentaR",
-                                "/representantes/fPassword",
-                                "/representantes/tyc",
                                 "/matriculas/formulario",
                                 "/resources/**",
                                 "/images/**",
                                 "/static/css/**",
-                                "/contactos/contactar")
-                            .permitAll()
-                        .requestMatchers("/representantes/cuenta/**").hasRole("REPRESENTANTE")
-                        .requestMatchers("/representantes/cuenta",
-                                "/estudiantes/cuenta")
-                            .authenticated()
-                        .anyRequest().permitAll())
+                                "/contactos/contactar", "/representantes/space", "/representantes/login",
+                                "/representantes/signUp", "/representantes/insertar",
+                                "/representantes/tyc", "/representantes/fPassword", "/error")
+                        .permitAll()
+                        .requestMatchers("/representantes/cuentaR", "/representantes/pagos").hasRole("REPRESENTANTE")
+                        .anyRequest().authenticated())
 
                 .formLogin(formLogin -> formLogin
-                        .loginPage("/representantes/login")
+                        .loginPage("/login")
                         .usernameParameter("email")
                         .passwordParameter("password")
                         .defaultSuccessUrl("/representantes/cuentaR", true)
+                        .failureUrl("/representantes/login?error=true")
                         .permitAll())
-
-                .logout(logout -> logout
-                        .logoutSuccessUrl("/menu/botones?logout=true")
-                        .permitAll())
-                        
+                .logout()
+                    .logoutUrl("/logout")
+                // .logoutSuccessUrl("/representantes/login?logout=true")
+                .permitAll()
+                
+            .and()
                 .csrf()
-                    .ignoringRequestMatchers("/send-email");
+                .ignoringRequestMatchers("/send-email");
 
         return http.build();
     }

@@ -1,34 +1,41 @@
 package com.uce.edusys.configuracion.seguridad;
 
 import java.util.Collection;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.uce.edusys.repository.modelo.Representante;
 
 public class CustomUserDetails implements UserDetails {
 
-    private Representante representante;
+    private final String email;
+    private final String password;
+    private final Set<? extends GrantedAuthority> authorities;
 
-    public CustomUserDetails(Representante representante) {
-        this.representante = representante;
+    public CustomUserDetails(String email, String password, Set<? extends GrantedAuthority> authorities) {
+        this.email = email;
+        this.password = password;
+        this.authorities = authorities;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // throw new UnsupportedOperationException("Unimplemented method 'getAuthorities'");
-        return null;
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-        return representante.getPassword();
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return representante.getEmail();
+        return email;
     }
 
     @Override
@@ -51,11 +58,8 @@ public class CustomUserDetails implements UserDetails {
         return true;
     }
 
-    public String getUserName() {
-        return representante.getNombre();
-    }
-
-    // public String getUserEmail() {
-    //     return representante.getEmail();
+    // public String getUserName() {
+    //     return representante.getNombre();
     // }
+
 }

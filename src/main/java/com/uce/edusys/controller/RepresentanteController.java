@@ -1,9 +1,16 @@
 package com.uce.edusys.controller;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +19,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.uce.edusys.configuracion.seguridad.IRolRepository;
 import com.uce.edusys.paginacion.PageRender;
-import com.uce.edusys.repository.IRepresentanteRepository;
 import com.uce.edusys.repository.modelo.Representante;
+import com.uce.edusys.repository.modelo.Rol;
 import com.uce.edusys.service.IRepresentanteService;
 
 @Controller
@@ -22,7 +31,7 @@ import com.uce.edusys.service.IRepresentanteService;
 public class RepresentanteController {
 
 	@Autowired
-	private IRepresentanteRepository iRepresentanteRepository;
+	private IRolRepository iRolRepository;
 
 	@Autowired
 	private IRepresentanteService iRepresentanteService;
@@ -40,14 +49,30 @@ public class RepresentanteController {
 	@GetMapping("/login")
 	public String vistaRepresentantes() {
 		return "vistaIniciarSesionRepresentante";
-	}
+	} 
 
 	// http://localhost:8080/representantes/cuentaR
-	@PostMapping("/cuentaR")
-	public String login(@ModelAttribute("persona") Representante representante,
-			Model model) {
-		model.addAttribute("nombre", representante.getNombre());
-		return "vistaCuentaRepresentante";
+	@GetMapping("/cuentaR")
+	public String cuentaRepresentante(Model model, Authentication authentication) {
+		if (authentication != null && authentication.isAuthenticated()
+				&& !(authentication instanceof AnonymousAuthenticationToken)) {
+			String email = authentication.getName();
+			String pass = (String) authentication.getCredentials();
+			try {
+				Representante representante = iRepresentanteService.encontrarPorEmail(email);
+
+				System.out.println("contrasenia: " + pass);
+
+				model.addAttribute("representante", representante);
+				return "vistaCuentaRepresentante";
+			} catch (Exception e) {
+				// Manejo de excepciones
+				e.printStackTrace();
+				return "redirect:/representantes/login?error=true";
+			}
+		} else {
+			return "redirect:/representantes/login";
+		}
 	}
 
 	// http://localhost:8080/representantes/signUp
@@ -58,28 +83,24 @@ public class RepresentanteController {
 
 	// http://localhost:8080/representantes/insertar
 	@PostMapping("/insertar")
-	public String insertarRepresentante(@ModelAttribute("persona") Representante representante, Model model) {
+	public String insertarRepresentante(@ModelAttribute("representante") Representante representante, Model model) {
 		String encodedPassword = passwordEncoder.encode(representante.getPassword());
 		representante.setPassword(encodedPassword);
+		Rol representanteRole = iRolRepository.findByNombre("REPRESENTANTE");
+		if (representanteRole != null) {
+			Set<Rol> roles = new HashSet<>();
+			roles.add(representanteRole);
+			representante.setRoles(roles);
 
-		this.iRepresentanteService.registrarR(representante);
-		model.addAttribute("nombre", representante.getNombre());
-		return "khe";
+			this.iRepresentanteService.registrarR(representante);
+
+			model.addAttribute("nombre", representante.getNombre());
+			return "khe"; // Aquí coloca la vista a la que deseas redirigir después del registro
+		} else {
+			model.addAttribute("error", "Error al asignar rol REPRESENTANTE");
+			return "vistaCrearCuentaRepresentante";
+		}
 	}
-
-	// @PostMapping("/insertar")
-	// public String insertarRepresentante(@Valid @ModelAttribute("persona")
-	// Representante representante, BindingResult bindingResult, Model model) {
-	// if (bindingResult.hasErrors()) {
-	// // Si hay errores de validación, volver al formulario con los errores
-	// return "vistaCrearCuentaRepresentante"; // Nombre de la vista Thymeleaf
-	// }
-
-	// // Lógica para guardar el representante si la validación es exitosa
-	// this.iRepresentanteService.registrarR(representante);
-	// model.addAttribute("nombre", representante.getNombre());
-	// return "khe"; // Página de éxito
-	// }
 
 	// http://localhost:8080/representantes/tyc
 	@GetMapping("/tyc")
@@ -91,12 +112,6 @@ public class RepresentanteController {
 	@GetMapping("/fPassword")
 	public String vistaRepresentantesfPassword() {
 		return "vistaResetPassword";
-	}
-
-	@PostMapping("/logout")
-	public String SalirRepresentante() {
-		// La lógica de inicio de sesión será manejada por Spring Security
-		return "redirect:/representantes/space";
 	}
 
 	// http://localhost:8080/representantes/pagos
@@ -118,34 +133,5 @@ public class RepresentanteController {
 
 		return "listar";
 	}
-
-	// http://localhost:8080/representantes/session
-	// @GetMapping("/session")
-	// public ResponseEntity<?> getDetailsSession() {
-
-	// String sessionld = "";
-	// User user0bject = null;
-	// List<Object> sessions = SessionRegistry.getAllPrincipals();
-
-	// for (Object session : sessions) {
-	// if(session instanceof User) {
-	// userObject = (User) session;
-	// }
-
-	// List<SessionInformation> SessionInformations =
-	// sessionRegistry.getAllSesions(session, false);
-
-	// for (SessionInformation : SessionInformations) {
-	// sessionId = SessionInformation.getSessionId();
-	// }
-	// }
-
-	// Map<String, Object> response = new HashMap<> ();
-	// response.put("response", "Hello world");
-	// response.put("sessionId", sessionId);
-	// response.put("sessionUser", userObject);
-
-	// return ResponseEntity.ok(response);
-	// }
 
 }

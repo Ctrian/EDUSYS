@@ -1,15 +1,25 @@
 package com.uce.edusys.repository.modelo;
 
 public class EmailRequest {
-    private String to;
-    private String subject;
-    private String text;
     
-    public String getTo() {
-        return to;
+    private String fromEmail;
+    private String toEmail;
+    private String subject;
+    private String body;
+
+    //get y set
+
+    public String getToEmail() {
+        return toEmail;
     }
-    public void setTo(String to) {
-        this.to = to;
+    public void setToEmail(String toEmail) {
+        this.toEmail = toEmail;
+    }
+    public String getFromEmail() {
+        return fromEmail;
+    }
+    public void setFromEmail(String fromEmail) {
+        this.fromEmail = fromEmail;
     }
     public String getSubject() {
         return subject;
@@ -17,11 +27,11 @@ public class EmailRequest {
     public void setSubject(String subject) {
         this.subject = subject;
     }
-    public String getText() {
-        return text;
+    public String getBody() {
+        return body;
     }
-    public void setText(String text) {
-        this.text = text;
+    public void setBody(String body) {
+        this.body = body;
     }
     
 }

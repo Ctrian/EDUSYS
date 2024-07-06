@@ -54,7 +54,6 @@ public class Matricula {
 	private String nombreEstudiante;
 
 	@Column(name = "matr_bd_estu")
-	// @DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate bdEstudiante;
 
 	@Column(name = "matr_cedula_estu")

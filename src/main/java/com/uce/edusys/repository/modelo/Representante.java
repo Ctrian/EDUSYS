@@ -1,15 +1,20 @@
 package com.uce.edusys.repository.modelo;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -61,19 +66,25 @@ public class Representante {
 	private String password;
 
 	// relaciones
-	@OneToMany(mappedBy = "representante", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "representante", fetch = FetchType.EAGER)
 	private List<Estudiante> estudiantes;
 
-	@OneToMany(mappedBy = "representante", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "representante", fetch = FetchType.EAGER)
 	private List<Matricula> matriculas;
 
-	@OneToMany(mappedBy = "representante", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "representante", fetch = FetchType.EAGER)
 	private List<Transferencia> transferencias;
 
-	@OneToMany(mappedBy = "representante", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "representante", fetch = FetchType.EAGER)
 	private List<Repre_Conta> repre_Contas;
 
+	@ElementCollection
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "representante_roles", joinColumns = @JoinColumn(name = "representante_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Rol> roles = new HashSet<>();
+
 	// get y set
+
 	public Integer getId() {
 		return id;
 	}
@@ -145,7 +156,7 @@ public class Representante {
 	public void setRepre_Contas(List<Repre_Conta> repre_Contas) {
 		this.repre_Contas = repre_Contas;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
@@ -177,7 +188,15 @@ public class Representante {
 	public void setMatriculas(List<Matricula> matriculas) {
 		this.matriculas = matriculas;
 	}
-	
+
+	public Set<Rol> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Rol> roles) {
+		this.roles = roles;
+	}
+
 	// toString
-	
+
 }

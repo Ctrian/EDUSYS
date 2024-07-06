@@ -179,7 +179,7 @@
                                 }
 
                                 if (!esValido) {
-                                    alert("Ingrese solo números en total 10 y deben conformar un ID ecuatoriano");
+                                    alert("El campo de cédula es incorrecto \nIngrese solo números en total 10 y deben conformar un ID ecuatoriano");
                                 }
 
                                 return esValido;
@@ -227,7 +227,7 @@
                                 const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
                                 if (!regexEmail.test(email)) {
-                                    mensajeEmail.textContent = 'Ingrese un correo electrónico válido';
+                                    mensajeEmail.textContent = 'Ingrese una dirección de correo electrónico válido';
                                 } else {
                                     mensajeEmail.textContent = '';
                                 }

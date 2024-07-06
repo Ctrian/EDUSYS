@@ -52,6 +52,7 @@
                 <label for="email" class="form-label">Correo electrónico</label>
                 <input type="email" id="email" name="email" class="form-control" placeholder="ejemplo@dominio.com"
                   th:field="${representante.email}" required />
+                <small id="mensajeEmail" class="text-danger"></small>
               </div>
               <div class="mb-3">
                 <label for="direccion" class="form-label">Dirección</label>
@@ -97,24 +98,6 @@
                 }
               }
 
-              document.getElementById('cedula').addEventListener('input', function (e) {
-                this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
-
-                const cedula = e.target.value;
-                const mensajeCedula = document.getElementById('mensajeCedula');
-                const regexCedula = /^\d{10}$/;
-
-                if (!regexCedula.test(cedula)) {
-                  mensajeCedula.textContent = 'Ingrese correctamente el número de cédula (10 dígitos numéricos)';
-                } else {
-                  if (!validarCedulaEcuatoriana(cedula)) {
-                    mensajeCedula.textContent = 'Ingrese una cédula válida ecuatoriana';
-                  } else {
-                    mensajeCedula.textContent = '';
-                  }
-                }
-              });
-
               function validarCedulaEcuatoriana(cedula) {
                 if (cedula.length !== 10) {
                   return false;
@@ -133,6 +116,36 @@
 
                 return resultado === digitoVerificador;
               }
+
+              document.getElementById('cedula').addEventListener('input', function (e) {
+                this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
+
+                const cedula = e.target.value;
+                const mensajeCedula = document.getElementById('mensajeCedula');
+                const regexCedula = /^\d{10}$/;
+
+                if (!regexCedula.test(cedula)) {
+                  mensajeCedula.textContent = 'Ingrese correctamente el número de cédula (10 dígitos numéricos)';
+                } else {
+                  if (!validarCedulaEcuatoriana(cedula)) {
+                    mensajeCedula.textContent = 'Ingrese una cédula válida ecuatoriana';
+                  } else {
+                    mensajeCedula.textContent = '';
+                  }
+                }
+              });
+
+              document.getElementById('email').addEventListener('input', function (e) {
+                const email = e.target.value;
+                const mensajeEmail = document.getElementById('mensajeEmail');
+                const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                if (!regexEmail.test(email)) {
+                  mensajeEmail.textContent = 'Ingrese un correo electrónico válido';
+                } else {
+                  mensajeEmail.textContent = '';
+                }
+              });
 
               document.getElementById('telefono').addEventListener('input', function (e) {
                 this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
@@ -171,8 +184,6 @@
                   return false;
                 }
 
-                // Aquí redirigimos al usuario después de enviar el formulario
-                window.location.href = "/representantes/login";
                 return true;
               }
             </script>

@@ -13,7 +13,6 @@ import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
-@Primary
 @Repository
 @Transactional
 
@@ -50,9 +49,11 @@ public class RepresentanteRepositoryImpl implements IRepresentanteRepository {
         query.setParameter("datoEmail", email);
         List<Representante> results = query.getResultList();
         if (results.isEmpty()) {
+            System.out.println("No se encontró representante con email: " + email);
             return null;
         }
-        return results.get(0);
+        System.out.println("Se encontró representante: " + results.get(0).getEmail());
+    return results.get(0);
     }
 
     @Override
@@ -60,6 +61,7 @@ public class RepresentanteRepositoryImpl implements IRepresentanteRepository {
         throw new UnsupportedOperationException("Unimplemented method 'encontrarPorCedulaRepresentados'");
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Representante> encontrarTodos() {
         Query query = this.entityManager.createQuery("SELECT r FROM Representante r", Representante.class);
