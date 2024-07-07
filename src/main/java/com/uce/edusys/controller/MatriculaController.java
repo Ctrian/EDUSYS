@@ -29,6 +29,7 @@ public class MatriculaController {
 	}
 
 	// enviar correos electronicos
+	// http://localhost:8080/matriculas/insertar
 	@PostMapping("/insertar")
 	public String vistaPadresRegistro(@ModelAttribute("matricula") Matricula matricula, Model model) {
 		this.iMatriculaService.registrarM(matricula);

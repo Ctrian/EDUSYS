@@ -1,28 +1,19 @@
 package com.uce.edusys.repository;
 
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import com.uce.edusys.repository.modelo.Representante;
 
-public interface IRepresentanteRepository {
-    
-	public void insertar(Representante representante);
-
-	public void actualizar(Representante representante);
-
-	public Representante buscar(Integer id);
-
-	public void eliminar(Integer id);
+@Repository
+public interface IRepresentanteRepository extends JpaRepository<Representante, Integer> {
 
     // encontrar por email
-    public Representante encontrarPorEmail(String email);
+    public Representante findByEmail(String email);
 
     // encontrar la lista de representados
-    public List<Representante> encontrarPorCedulaRepresentados(String cedula);
-
-    // encontrar todos los representantes
-    public List<Representante> encontrarTodos();
+    public Representante findByCedula(String cedula);
 
     // encontrar todos los pagos
-    public List<Representante> encontrarPagosRepresentante(String cedula);
+    // public List<Representante> encontrarPagosRepresentante(String cedula);
 }

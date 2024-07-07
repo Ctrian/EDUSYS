@@ -3,8 +3,6 @@ package com.uce.edusys.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,49 +27,56 @@ public class RepresentanteServiceImpl implements IRepresentanteService {
     @Transactional
     public void registrarR(Representante representante) {
         Rol role = iRolRepository.findByNombre("ROLE_REPRESENTANTE");
+        //representante.getRoles().add(role);
         if (!representante.getRoles().contains(role)) {
             representante.getRoles().add(role);
         }
-        this.iRepresentanteRepository.insertar(representante);
+        this.iRepresentanteRepository.save(representante);
     }
 
     @Override
     @Transactional
     public void actualizarR(Representante representante) {
-        this.iRepresentanteRepository.actualizar(representante);
+        this.iRepresentanteRepository.save(representante);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Representante encontrarR(Integer id) {
-        return this.iRepresentanteRepository.buscar(id);
+        return this.iRepresentanteRepository.findById(id).orElse(null);
     }
 
     @Override
     @Transactional
     public void borrarR(Integer id) {
-        this.iRepresentanteRepository.eliminar(id);
+        this.iRepresentanteRepository.deleteById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Representante encontrarPorEmail(String email) {
-        return this.iRepresentanteRepository.encontrarPorEmail(email);
+        return this.iRepresentanteRepository.findByEmail(email);
     }
 
     @Override
-    public List<Representante> encontrarPorCedulaList(String cedula) {
-        throw new UnsupportedOperationException("Unimplemented method 'encontrarPorCedulaList'");
+    public Representante encontrarPorCedula(String cedula) {
+        return this.iRepresentanteRepository.findByCedula(cedula);
     }
 
     @Override
     public List<Representante> encontrarTodos() {
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+        return this.iRepresentanteRepository.findAll();
     }
 
-    @Override
-    public Page<Representante> encontrarTodos(Pageable pageable) {
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
-    }
+    /* @Override
+    public Page<Representante> encontrarTodos(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return this.iRepresentanteRepository.findAll(pageable);
+    } */
+
+    // @Override
+    // public Page<Representante> encontrarTodos(Pageable pageable) {
+    //     return null;
+    // }
 
 }

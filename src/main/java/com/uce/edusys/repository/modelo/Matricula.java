@@ -1,16 +1,21 @@
 package com.uce.edusys.repository.modelo;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -27,6 +32,34 @@ public class Matricula {
 
 	@Column(name = "matr_fecha")
 	private LocalDateTime fecha = LocalDateTime.now();
+
+	@Column(name = "matr_grado_dia")
+	Integer[] gradoDia = { 1, 2, 3 };
+
+	@Column(name = "matr_grado_tarde")
+	Integer[] gradoTarde = { 8, 9, 10 };
+
+	// Costo total matricula en la mañana
+	@Column(name = "matr_precio_matricula_dia")
+	private BigDecimal precioMatriculaDia;
+
+	// costo de las cuotas matricula en la mañana
+	@Column(name = "matr_precio_cuota_matricula_dia")
+	private BigDecimal precioCuotaMatriculaDia;
+
+	// Costo total matricula en la tarde
+	@Column(name = "matr_precio_matricula_tarde")
+	private BigDecimal precioMatriculaTarde;
+
+	// costo de las cuotas matricula en la tarde
+	@Column(name = "matr_precio_cuota_matricula_tarde")
+	private BigDecimal precioCuotaMatriculaTarde;
+
+	// estado de la matricula
+	@Enumerated(EnumType.STRING)
+	private EstadoMatricula estado;
+
+	// <---------- REPRESENTANTE ----------->
 
 	@Column(name = "matr_nombre_repr")
 	private String nombreRepresentante;
@@ -73,7 +106,11 @@ public class Matricula {
 	@JoinColumn(name = "matr_id_curso")
 	private Curso curso;
 
+	@OneToMany(mappedBy = "matricula", cascade = CascadeType.ALL)
+	private List<Pago> pagos;
+
 	// get y set
+
 	public Integer getId() {
 		return id;
 	}
@@ -192,6 +229,77 @@ public class Matricula {
 
 	public void setBdEstudiante(LocalDate bdEstudiante) {
 		this.bdEstudiante = bdEstudiante;
+	}
+
+	public Integer[] getGradoTarde() {
+		return gradoTarde;
+	}
+
+	public void setGradoTarde(Integer[] gradoTarde) {
+		this.gradoTarde = gradoTarde;
+	}
+
+	public Integer[] getGradoDia() {
+		return gradoDia;
+	}
+
+	public void setGradoDia(Integer[] gradoDia) {
+		this.gradoDia = gradoDia;
+	}
+
+	public BigDecimal getPrecioMatriculaDia() {
+		return precioMatriculaDia;
+	}
+
+	public void setPrecioMatriculaDia(BigDecimal precioMatriculaDia) {
+		this.precioMatriculaDia = precioMatriculaDia;
+	}
+
+	public BigDecimal getPrecioMatriculaTarde() {
+		return precioMatriculaTarde;
+	}
+
+	public void setPrecioMatriculaTarde(BigDecimal precioMatriculaTarde) {
+		this.precioMatriculaTarde = precioMatriculaTarde;
+	}
+
+	public BigDecimal getPrecioCuotaMatriculaDia() {
+		return precioCuotaMatriculaDia;
+	}
+
+	public void setPrecioCuotaMatriculaDia(BigDecimal precioCuotaMatriculaDia) {
+		this.precioCuotaMatriculaDia = precioCuotaMatriculaDia;
+	}
+
+	public BigDecimal getPrecioCuotaMatriculaTarde() {
+		return precioCuotaMatriculaTarde;
+	}
+
+	public void setPrecioCuotaMatriculaTarde(BigDecimal precioCuotaMatriculaTarde) {
+		this.precioCuotaMatriculaTarde = precioCuotaMatriculaTarde;
+	}
+
+	public EstadoMatricula getEstado() {
+		return estado;
+	}
+
+	public void setEstado(EstadoMatricula estado) {
+		this.estado = estado;
+	}
+
+	// Método para actualizar el estado de la matrícula basado en los pagos
+	public void actualizarEstado() {
+		// Verifica si todos los pagos asociados a esta matrícula están completos
+		if (this.pagos.stream().allMatch(pago -> pago.getEstado() == EstadoPago.COMPLETO)) {
+			this.estado = EstadoMatricula.MATRICULADO;
+		} else if (this.pagos.stream().anyMatch(pago -> pago.getEstado() == EstadoPago.EN_PROCESO)) {
+			// Si hay al menos un pago en proceso, se marca como en proceso
+			this.estado = EstadoMatricula.EN_PROCESO;
+		} else {
+			// Si no todos los pagos están completos ni hay pagos en proceso, se considera
+			// no matriculado
+			this.estado = EstadoMatricula.NO_MATRICULADO;
+		}
 	}
 
 }

@@ -15,12 +15,18 @@ public class DataInitializer {
 
     @PostConstruct
     public void init() {
-        // Check if the role REPRESENTANTE exists, if not create it
-        if (iRolRepository.findByNombre("REPRESENTANTE") == null) {
-            Rol representanteRole = new Rol();
-            representanteRole.setNombre("REPRESENTANTE");
-            iRolRepository.save(representanteRole);
+        // Define the roles
+        String[] roles = {"REPRESENTANTE", "ESTUDIANTE", "PROFESOR", "ADMIN", "USER"};
+
+        // Check and create roles if they do not exist
+        for (String roleName : roles) {
+            if (iRolRepository.findByNombre(roleName) == null) {
+                Rol role = new Rol();
+                role.setNombre(roleName);
+                iRolRepository.save(role);
+            }
         }
+        
     }
 
 }

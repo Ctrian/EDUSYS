@@ -7,7 +7,6 @@ import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -30,6 +29,7 @@ public class Representante {
 	@Id
 	@SequenceGenerator(name = "seq_representante", sequenceName = "seq_representante", allocationSize = 1)
 	@GeneratedValue(generator = "seq_representante", strategy = GenerationType.SEQUENCE)
+
 	@Column(name = "repr_id")
 	private Integer id;
 
@@ -81,8 +81,10 @@ public class Representante {
 	private List<Repre_Conta> repre_Contas;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "representante_roles", joinColumns = @JoinColumn(name = "representante_id"), inverseJoinColumns = @JoinColumn(name = "role_id"), uniqueConstraints = @UniqueConstraint(columnNames = {
-			"representante_id", "rol_id" }))
+	@JoinTable(name = "representante_roles",
+		joinColumns = @JoinColumn(name = "representante_id"), 
+		inverseJoinColumns = @JoinColumn(name = "role_id"), 
+		uniqueConstraints = @UniqueConstraint(columnNames = {"representante_id", "rol_id" }))
 	private Set<Rol> roles = new HashSet<>();
 
 	// get y set

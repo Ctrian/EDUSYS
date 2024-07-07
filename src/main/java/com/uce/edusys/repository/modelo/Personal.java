@@ -1,16 +1,25 @@
 package com.uce.edusys.repository.modelo;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "personal")
@@ -32,6 +41,11 @@ public class Personal {
 	@Column(name = "pers_apellido")
 	private String apellido;
 
+	@NotEmpty
+	@Email
+	@Column(name = "pers_email")
+	private String email;
+
 	@Column(name = "pers_fecha_nacimiento")
 	private LocalDateTime fechaNacimiento;
 
@@ -40,6 +54,15 @@ public class Personal {
 
 	@Column(name = "pers_direccion")
 	private String direccion;
+
+	@Column(name = "pers_fecha_login")
+	private LocalDateTime fechaLogin = LocalDateTime.now();
+
+	// cifrado RSA
+
+	@NotEmpty
+	@Column(name = "repr_password")
+	private String password;
 
 	// relaciones
 	@OneToOne(mappedBy = "personal", cascade = CascadeType.ALL)
@@ -59,6 +82,13 @@ public class Personal {
 
 	@OneToOne(mappedBy = "personal", cascade = CascadeType.ALL)
 	private Asesor asesor;
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "personal_roles",
+		joinColumns = @JoinColumn(name = "personal_id"), 
+		inverseJoinColumns = @JoinColumn(name = "role_id"), 
+		uniqueConstraints = @UniqueConstraint(columnNames = {"personal_id", "rol_id" }))
+	private Set<Rol> roles = new HashSet<>();
 
 	// get y set
 
@@ -164,6 +194,38 @@ public class Personal {
 
 	public void setAsesor(Asesor asesor) {
 		this.asesor = asesor;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public LocalDateTime getFechaLogin() {
+		return fechaLogin;
+	}
+
+	public void setFechaLogin(LocalDateTime fechaLogin) {
+		this.fechaLogin = fechaLogin;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Set<Rol> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Rol> roles) {
+		this.roles = roles;
 	}
 
 }

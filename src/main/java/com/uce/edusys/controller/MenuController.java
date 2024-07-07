@@ -14,5 +14,11 @@ public class MenuController {
 	public String vistaMenu() {
 		return "home";
 	}
+
+	// http://localhost:8080/menu/contactar
+	@GetMapping("/contactar")
+	public String vistaRepresentantes() {
+		return "vistaContacto";
+	}
 	
 }

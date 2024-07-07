@@ -1,19 +1,25 @@
 package com.uce.edusys.repository.modelo;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "estudiante")
@@ -47,6 +53,9 @@ public class Estudiante {
 	@Column(name = "estu_telefono")
 	private String telefono;
 
+	@Column(name = "estu_email")
+	private String email;
+
 	// relaciones
 
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -61,6 +70,13 @@ public class Estudiante {
 
 	@OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL)
 	private List<Estu_Bibl> estu_Bibls;
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "estudiante_roles",
+		joinColumns = @JoinColumn(name = "estudiante_id"), 
+		inverseJoinColumns = @JoinColumn(name = "role_id"), 
+		uniqueConstraints = @UniqueConstraint(columnNames = {"estudiante_id", "rol_id" }))
+	private Set<Rol> roles = new HashSet<>();
 
 //	///////////////////////////////////////////////////////////////
 //
@@ -166,6 +182,22 @@ public class Estudiante {
 
 	public void setEstu_Bibls(List<Estu_Bibl> estu_Bibls) {
 		this.estu_Bibls = estu_Bibls;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Set<Rol> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Rol> roles) {
+		this.roles = roles;
 	}
 
 	// toString

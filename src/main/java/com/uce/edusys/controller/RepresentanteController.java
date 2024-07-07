@@ -5,8 +5,6 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uce.edusys.configuracion.seguridad.IRolRepository;
-import com.uce.edusys.paginacion.PageRender;
 import com.uce.edusys.repository.modelo.Representante;
 import com.uce.edusys.repository.modelo.Rol;
 import com.uce.edusys.service.IRepresentanteService;
@@ -120,17 +117,34 @@ public class RepresentanteController {
 
 	// http://localhost:8080/representantes/listar
 	@GetMapping("listar")
-	public String listarEmpleados(@RequestParam(name = "page", defaultValue = "0") int page, Model model) {
-		Pageable pageRequest = PageRequest.of(page, 5);
-		Page<Representante> representantes = this.iRepresentanteService.encontrarTodos(pageRequest);
-		PageRender<Representante> pageRender = new PageRender<>("/listar", representantes);
+	public String listarRepresentantes(@RequestParam(name = "page", defaultValue = "0") int page, 
+                                       @RequestParam(name = "size", defaultValue = "10") int size, 
+                                       Model model) {
+        @SuppressWarnings("unchecked")
+		Page<Representante> representantes = (Page<Representante>) iRepresentanteService.encontrarTodos();
+        model.addAttribute("representantes", representantes.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", representantes.getTotalPages());
+        return "listarRepresentantes";
+    }
 
-		model.addAttribute("titulo", "Listado de representantes");
-		model.addAttribute("representantes", representantes);
-		model.addAttribute("page", pageRender);
+	/* @GetMapping("/listar")
+    public String listarRepresentantes(@RequestParam(name = "page", defaultValue = "0") int page, 
+                                       @RequestParam(name = "size", defaultValue = "10") int size, 
+                                       Model model) {
+        Page<Representante> representantes = iRepresentanteService.encontrarTodos(page, size);
+        model.addAttribute("representantes", representantes.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", representantes.getTotalPages());
+        return "listarRepresentantes";
+    } */
 
-		return "listar";
-	}
+	@GetMapping("/buscarPorCedula")
+    public String buscarPorCedula(@RequestParam("cedula") String cedula, Model model) {
+        Representante representante = iRepresentanteService.encontrarPorCedula(cedula);
+        model.addAttribute("representante", representante);
+        return "vistaRepresentante";
+    }
 
 	@PostMapping("/logout")
 	public String SalirRepresentante() {
