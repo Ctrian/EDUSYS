@@ -37,7 +37,8 @@
               </div>
               <div class="mb-3">
                 <label for="password" class="form-label">Contraseña</label>
-                <input type="password" id="password" name="password" class="form-control" placeholder="******" required />
+                <input type="password" id="password" name="password" class="form-control" placeholder="******"
+                  required />
               </div>
               <div class="mt-4 text text-sm">
                 <a href="/representantes/fPassword" class="underline">¿Olvidaste tu contraseña?</a>
@@ -48,6 +49,8 @@
                   Iniciar Sesión
                 </button>
               </div>
+
+              <!----------------- FALLO DE CREDENCIALES ------------------->
 
               <div th:if="${param.error}">
                 <div class="alert alert-danger" role="alert">

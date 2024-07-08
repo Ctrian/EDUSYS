@@ -23,7 +23,7 @@
                     <li><a href="/contactos/contactar"> CONTACTO</a></li>
                     <!-- <li><a href="/representantes/space"> PADRES</a></li>
                     <li><a href="vistaEstudiantes.html"> ESTUDIANTES</a></li> -->
-                    <li><a href="vistaPersonal.html"> PERSONAL</a></li>
+                    <li><a href="#"> PERSONAL</a></li>
                     <li>
                         <form th:action="@{/logout}" method="POST">
                             <button type="submit" class="logout-button">SALIR</button>
@@ -44,7 +44,7 @@
     </section>
     <!----------------- MENSAJE DE CIERRE DE SESIÓN ------------------->
     <div th:if="${param.logout}">
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-danger" role="alert">
             Has cerrado sesión con éxito.
         </div>
     </div>
@@ -63,7 +63,7 @@
         </section>
         <h1>Información Importante</h1>
         <div class="filas">
-            <div class="menu-padres-colum" onclick="location.href='vistaPagoMatricula.html';" style="cursor: pointer;">
+            <div class="menu-padres-colum" onclick="location.href='/representantes/matricular';" style="cursor: pointer;">
                 <img src="/images/matriculacion.jpg" alt="">
                 <div class="layer">
                     <h3>MATRICULACIÓN</h3>

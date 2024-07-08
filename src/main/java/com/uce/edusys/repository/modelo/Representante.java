@@ -50,6 +50,7 @@ public class Representante {
 	@Column(name = "repr_email")
 	private String email;
 
+	// back
 	@Column(name = "repr_fecha_login")
 	private LocalDateTime fechaLogin = LocalDateTime.now();
 

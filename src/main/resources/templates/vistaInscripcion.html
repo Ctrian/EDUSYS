@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="with=device-width, initial-scale = 1.0 ">
-    <title>Inscripcion</title>
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <title>APÚNTATE</title>
     <link rel="stylesheet" href="/static/css/estilos.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -29,7 +29,7 @@
                     </div>
                     <div class="card-body">
                         <form id="formularioMatricula" onsubmit="return validarFormulario()"
-                            th:action="@{/matriculas/insertar}" th:object="${matricula}" th:method="POST">
+                            th:action="@{/menu/insertar}" th:object="${matricula}" th:method="POST">
                             <h2 class="mb-3">Datos del Representante</h2>
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre</label>
@@ -82,8 +82,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="child_birthdate" class="form-label">Fecha de Nacimiento</label>
-                                <input type="date" id="child_birthdate" name="child_birthdate" minlength="27-06-2004"
-                                    maxlength="27-10-2024" class="form-control" th:field="${matricula.bdEstudiante}"
+                                <input type="date" id="child_birthdate" name="child_birthdate" min="27-06-2004"
+                                    max="27-10-2024" class="form-control" th:field="${matricula.bdEstudiante}"
                                     required />
                             </div>
                             <div class="mb-3">
@@ -107,7 +107,7 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <button type="submit" class="btn btn-primary w-100">Inscribirse</button>
+                                <button type="submit" class="btn btn-primary w-100">Inscríbete</button>
                             </div>
                         </form>
 

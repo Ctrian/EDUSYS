@@ -1,5 +1,6 @@
 package com.uce.edusys.repository.modelo;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -42,19 +43,30 @@ public class Estudiante {
 	private String apellido;
 
 	@Column(name = "estu_fecha_nacimiento")
-	private LocalDateTime fechaNacimiento;
+	private LocalDate fechaNacimiento;
 
+	// back
+	@Column(name = "estu_fecha_login")
+	private LocalDateTime fechaLogin = LocalDateTime.now();
+
+	// asignado por la institucion??
 	@Column(name = "estu_genero")
 	private String genero;
 
+	// maybe no...
 	@Column(name = "estu_direccion")
 	private String direccion;
 
 	@Column(name = "estu_telefono")
 	private String telefono;
 
+	// asignado por la institución
 	@Column(name = "estu_email")
 	private String email;
+
+	// asignado por la institución
+	@Column(name = "estu_password")
+	private String password;
 
 	// relaciones
 
@@ -72,25 +84,19 @@ public class Estudiante {
 	private List<Estu_Bibl> estu_Bibls;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "estudiante_roles",
-		joinColumns = @JoinColumn(name = "estudiante_id"), 
-		inverseJoinColumns = @JoinColumn(name = "role_id"), 
-		uniqueConstraints = @UniqueConstraint(columnNames = {"estudiante_id", "rol_id" }))
+	@JoinTable(name = "estudiante_roles", joinColumns = @JoinColumn(name = "estudiante_id"), inverseJoinColumns = @JoinColumn(name = "role_id"), uniqueConstraints = @UniqueConstraint(columnNames = {
+			"estudiante_id", "rol_id" }))
 	private Set<Rol> roles = new HashSet<>();
 
-//	///////////////////////////////////////////////////////////////
-//
-//	@OneToOne(mappedBy = "estudiante", cascade = CascadeType.ALL)
-//	private Comida comida;
-//
-//	@OneToOne(mappedBy = "estudiante", cascade = CascadeType.ALL)
-//	private Taller taller;
+	// ///////////////////////////////////////////////////////////////
+	//
+	// @OneToOne(mappedBy = "estudiante", cascade = CascadeType.ALL)
+	// private Comida comida;
+	//
+	// @OneToOne(mappedBy = "estudiante", cascade = CascadeType.ALL)
+	// private Taller taller;
 
 	// get y set
-
-	public String getCedula() {
-		return cedula;
-	}
 
 	public String getNombre() {
 		return nombre;
@@ -100,16 +106,8 @@ public class Estudiante {
 		return apellido;
 	}
 
-	public LocalDateTime getFechaNacimiento() {
-		return fechaNacimiento;
-	}
-
 	public String getGenero() {
 		return genero;
-	}
-
-	public void setCedula(String cedula) {
-		this.cedula = cedula;
 	}
 
 	public void setNombre(String nombre) {
@@ -118,10 +116,6 @@ public class Estudiante {
 
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
-	}
-
-	public void setFechaNacimiento(LocalDateTime fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
 	}
 
 	public void setGenero(String genero) {
@@ -198,6 +192,38 @@ public class Estudiante {
 
 	public void setRoles(Set<Rol> roles) {
 		this.roles = roles;
+	}
+
+	public LocalDateTime getFechaLogin() {
+		return fechaLogin;
+	}
+
+	public void setFechaLogin(LocalDateTime fechaLogin) {
+		this.fechaLogin = fechaLogin;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getCedula() {
+		return cedula;
+	}
+
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
+	}
+
+	public LocalDate getFechaNacimiento() {
+		return fechaNacimiento;
+	}
+
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
 	}
 
 	// toString

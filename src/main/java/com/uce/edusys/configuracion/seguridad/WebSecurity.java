@@ -36,9 +36,8 @@ public class WebSecurity {
                                 .authorizeRequests(authorizeRequests -> authorizeRequests
                                                 .requestMatchers("/",
                                                                 "/menu/botones", "/menu/contactar",
-                                                                "/matriculas/formulario",
-                                                                "/matriculas/insertar",
-                                                                 "/representantes/space",
+                                                                "menu/formulario", "menu/insertar",
+                                                                "/representantes/space",
                                                                 "/representantes/login",
                                                                 "/representantes/signUp", "/representantes/insertar",
                                                                 "/representantes/tyc", "/representantes/fPassword",
@@ -47,7 +46,8 @@ public class WebSecurity {
                                                                 "/images/**",
                                                                 "/static/css/**")
                                                 .permitAll()
-                                                .requestMatchers("/representantes/cuentaR", "/representantes/pagos")
+                                                .requestMatchers("/representantes/cuentaR", "/representantes/pagos",
+                                                                "/representantes/matricular", "/representantes/enviado")
                                                 .hasRole("REPRESENTANTE")
                                                 .requestMatchers("/estudiantes/cuentaE").hasRole("ESTUDIANTE")
                                                 .requestMatchers("/profesores/cuentaP").hasRole("PROFESOR")

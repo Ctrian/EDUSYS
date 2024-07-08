@@ -165,7 +165,7 @@
                 const regexSoloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/;
 
                 if (!/^\d{10}$/.test(cedula) || !validarCedulaEcuatoriana(cedula)) {
-                  alert("Ingrese solo números en total 10 y deben conformar un ID ecuatoriano");
+                  alert("El campo de cédula es incorrecto \nIngrese solo números en total 10 y deben conformar un ID ecuatoriano");
                   return false;
                 }
 
