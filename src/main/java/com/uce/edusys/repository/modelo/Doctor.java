@@ -52,7 +52,7 @@ public class Doctor {
 	@OneToOne(mappedBy = "doctor", cascade = CascadeType.ALL)
 	private Enfermeria enfermeria;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "doct_id_personal")
-	Personal personal;
+	// @OneToOne(cascade = CascadeType.ALL)
+	// @JoinColumn(name = "doct_id_personal")
+	// Personal personal;
 }

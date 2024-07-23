@@ -43,11 +43,10 @@ public class MenuController {
 		return "vistaInscripcion";
 	}
 
-	// enviar correos electronicos
 	// http://localhost:8080/menu/insertar
 	@PostMapping("/insertar")
 	public String vistaPadresRegistro(@ModelAttribute("matricula") Matricula matricula, Model model) {
-		this.iMatriculaService.registrarM(matricula);
+		this.iMatriculaService.registrarM(null, null, null);
 		model.addAttribute("nombre", matricula.getNombreRepresentante());
 
 		String fromEmail = matricula.getEmailRepresentante(); // Dirección de correo del formulario

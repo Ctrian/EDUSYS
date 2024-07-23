@@ -11,4 +11,8 @@ import com.uce.edusys.repository.modelo.Pago;
 public interface IPagoRepository extends JpaRepository<Pago, Integer> {
 
     public List<Pago> findByMatriculaId(Integer id);
+
+    public List<Pago> findByFacturaId(Integer id);
+    
+    // public List<Pago> findByRepresentanteId(Integer id);
 }

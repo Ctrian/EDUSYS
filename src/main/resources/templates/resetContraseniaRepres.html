@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/static/css/estilos.css">
+	<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+	<title>Inicio de Sesión</title>
+</head>
+
+<body>
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<h1 class="mb-0 text-center">Cambiar su contraseña</h1>
+					</div>
+					<div class="card-body">
+						<form th:action="@{/representantes/reset-password/reset}" th:method="POST"
+							onsubmit="return validatePasswords()">
+							<input type="hidden" name="token" th:value="${token}">
+
+							<div class="mb-3">
+								<label for="newPassword" class="form-label">Contraseña nueva</label>
+								<input type="password" id="newPassword" class="form-control" name="newPassword"
+									required />
+							</div>
+
+							<div class="mb-3">
+								<label for="confirmPassword" class="form-label">Repita la contraseña</label>
+								<input type="password" id="confirmPassword" class="form-control" name="confirmPassword"
+									required />
+							</div>
+
+							<div id="warningMessage" style="display:none; color:red;">
+								Las contraseñas no coinciden. Por favor, inténtelo de nuevo.
+							</div>
+
+							<button type="submit">Cambiar contraseña</button>
+						</form>
+						<p th:if="${message}" th:text="${message}"></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script>
+	function validatePasswords() {
+		var newPassword = document.getElementById("newPassword").value;
+		var confirmPassword = document.getElementById("confirmPassword").value;
+		var warningMessage = document.getElementById("warningMessage");
+
+		if (newPassword !== confirmPassword) {
+			warningMessage.style.display = "block";
+			return false;
+		} else {
+			warningMessage.style.display = "none";
+			return true;
+		}
+	}
+</script>
+
+</html>

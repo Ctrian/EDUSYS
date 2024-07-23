@@ -16,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -32,28 +33,6 @@ public class Matricula {
 
 	@Column(name = "matr_fecha")
 	private LocalDateTime fecha = LocalDateTime.now();
-
-	@Column(name = "matr_grado_dia")
-	Integer[] gradoDia = { 1, 2, 3 };
-
-	@Column(name = "matr_grado_tarde")
-	Integer[] gradoTarde = { 8, 9, 10 };
-
-	// Costo total matricula en la mañana
-	@Column(name = "matr_precio_matricula_dia")
-	private BigDecimal precioMatriculaDia;
-
-	// costo de las cuotas matricula en la mañana
-	@Column(name = "matr_precio_cuota_matricula_dia")
-	private BigDecimal precioCuotaMatriculaDia;
-
-	// Costo total matricula en la tarde
-	@Column(name = "matr_precio_matricula_tarde")
-	private BigDecimal precioMatriculaTarde;
-
-	// costo de las cuotas matricula en la tarde
-	@Column(name = "matr_precio_cuota_matricula_tarde")
-	private BigDecimal precioCuotaMatriculaTarde;
 
 	// estado de la matricula
 	@Enumerated(EnumType.STRING)
@@ -98,9 +77,13 @@ public class Matricula {
 	@JoinColumn(name = "matr_id_representante")
 	private Representante representante;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "matr_id_estudiante")
 	private Estudiante estudiante;
+
+	@ManyToOne
+	@JoinColumn(name = "matr_id_oferta")
+	private OfertaAcademica ofertaAcademica;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "matr_id_curso")
@@ -231,60 +214,28 @@ public class Matricula {
 		this.bdEstudiante = bdEstudiante;
 	}
 
-	public Integer[] getGradoTarde() {
-		return gradoTarde;
-	}
-
-	public void setGradoTarde(Integer[] gradoTarde) {
-		this.gradoTarde = gradoTarde;
-	}
-
-	public Integer[] getGradoDia() {
-		return gradoDia;
-	}
-
-	public void setGradoDia(Integer[] gradoDia) {
-		this.gradoDia = gradoDia;
-	}
-
-	public BigDecimal getPrecioMatriculaDia() {
-		return precioMatriculaDia;
-	}
-
-	public void setPrecioMatriculaDia(BigDecimal precioMatriculaDia) {
-		this.precioMatriculaDia = precioMatriculaDia;
-	}
-
-	public BigDecimal getPrecioMatriculaTarde() {
-		return precioMatriculaTarde;
-	}
-
-	public void setPrecioMatriculaTarde(BigDecimal precioMatriculaTarde) {
-		this.precioMatriculaTarde = precioMatriculaTarde;
-	}
-
-	public BigDecimal getPrecioCuotaMatriculaDia() {
-		return precioCuotaMatriculaDia;
-	}
-
-	public void setPrecioCuotaMatriculaDia(BigDecimal precioCuotaMatriculaDia) {
-		this.precioCuotaMatriculaDia = precioCuotaMatriculaDia;
-	}
-
-	public BigDecimal getPrecioCuotaMatriculaTarde() {
-		return precioCuotaMatriculaTarde;
-	}
-
-	public void setPrecioCuotaMatriculaTarde(BigDecimal precioCuotaMatriculaTarde) {
-		this.precioCuotaMatriculaTarde = precioCuotaMatriculaTarde;
-	}
-
 	public EstadoMatricula getEstado() {
 		return estado;
 	}
 
 	public void setEstado(EstadoMatricula estado) {
 		this.estado = estado;
+	}
+
+	public OfertaAcademica getOfertaAcademica() {
+		return ofertaAcademica;
+	}
+
+	public void setOfertaAcademica(OfertaAcademica ofertaAcademica) {
+		this.ofertaAcademica = ofertaAcademica;
+	}
+
+	public List<Pago> getPagos() {
+		return pagos;
+	}
+
+	public void setPagos(List<Pago> pagos) {
+		this.pagos = pagos;
 	}
 
 	// Método para actualizar el estado de la matrícula basado en los pagos

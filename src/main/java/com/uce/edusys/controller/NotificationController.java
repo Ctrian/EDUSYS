@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.uce.edusys.configuracion.EmailRequest;
 import com.uce.edusys.configuracion.EmailService;
-import com.uce.edusys.repository.modelo.EmailRequest;
 
 @RestController
 public class NotificationController {

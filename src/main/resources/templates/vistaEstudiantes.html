@@ -1,97 +1,101 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta name= "viewport" content="with=device-width, initial-scale = 1.0 ">
+    <meta name="viewport" content="with=device-width, initial-scale = 1.0 ">
     <title>Liceo Central </title>
     <link rel="stylesheet" href="/static/css/estilos.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">     
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+
 <body>
-    <section class="estudiantes-header">
+    <section class="personal-header">
         <nav>
             <a href="/menu/botones"><img src="/images/logotipo.png"></a>
             <h3>LICEO CENTRAL DE CIENCIAS Y ARTE</h3>
-            <div class = "nav-links" id="navLinks">
-                <i class="fa fa-times" onclick = "hideMenu()" ></i>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
                 <ul>
-                    <!-- <li><a href="/menu/botones"> HOME</a></li>-->
-                    <!-- <li><a href=""> SERVICIOS</a></li> -->
+                    <li><a href="/menu/botones"> HOME</a></li>
                     <!-- <li><a href=""> CLUBES</a></li> -->
-                    <li><a href="/contactos/contactar"> CONTACTO</a></li>
-                    <li><a href="/personal/space"> PERSONAL</a></li>     
+                    <li><a href="/menu/contactar"> CONTACTO</a></li>
+                    <li><a href="/representantes/space"> PADRES</a></li>
+                    <li><a href="/personal/space"> PERSONAL</a></li>
                 </ul>
             </div>
-            <i class="fa fa-bars" onclick = "showMenu()"></i>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
         </nav>
         <div class="text-box">
-            <h1>Estudiantes</h1>
-            <br/>
+            <h1>ESTUDIANTES</h1>
+            <br />
             <br></br>
             <br></br>
-            <br/>   
+            <br />
         </div>
     </section>
-<!----------------- MENU ESTUDIANTES------------------->
-<section class="menu-estudiante">
+    <!----------------- MENU ESTUDIANTES------------------->
+    <section class="menu-estudiante">
         <h1>Accede a tu cuenta</h1>
-      <section class="inicioSesion-Estudiantes">
-        <p>Nos esforzamos por crear un entorno educativo que potencie el desarrollo integral de cada uno 
-            de nuestros estudiantes. <br></br>
-            Aquí, encontrarás los recursos y la información que necesitas para 
-            aprovechar al máximo tu experiencia académica y personal.</p> 
+        <section class="inicioSesion-Estudiantes">
+            <p>Nos esforzamos por crear un entorno educativo que potencie el desarrollo integral de cada uno
+                de nuestros estudiantes. <br></br>
+                Aquí, encontrarás los recursos y la información que necesitas para
+                aprovechar al máximo tu experiencia académica y personal.</p>
             <a href="vistaInicioSesion.html" class="hero-btn">Inicio de Sesión</a>
-    
-    </section>
-    <h1>Información Importante</h1>   
-    <div class="filas">
-        <div  class="menu-estudiante-colum">
-            <img src="/images/horario.jpg" alt="">
+
+        </section>
+        <h1>Información Importante</h1>
+        <div class="filas">
+            <div class="menu-estudiante-colum">
+                <img src="/images/horario.jpg" alt="">
                 <div class="layer">
                     <h3>HORARIOS</h3>
                 </div>
-        </div>
-        <div class="menu-estudiante-colum">
-            <img src="/images/calificacion.jpg" alt="">
+            </div>
+            <div class="menu-estudiante-colum">
+                <img src="/images/calificacion.jpg" alt="">
                 <div class="layer">
                     <h3>CALIFICACIONES</h3>
                 </div>
-        </div>
-        <div class="menu-estudiante-colum">
-            <img src="/images/clubes.jpg" alt="">
+            </div>
+            <div class="menu-estudiante-colum">
+                <img src="/images/clubes.jpg" alt="">
                 <div class="layer">
                     <h3>CLUBES</h3>
                 </div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
-<!-----------------FOOTER------------------->
-<section class= "footer">
-    <h4> NOSOSTROS</h4>
-    <p>
-        Somos una institución dedicada a proporcionar una educación integral y de alta calidad.
-       <br> Nuestro compromiso es con la formación de estudiantes preparados para enfrentar los retos del futuro.
-    </p>
-    <div class="icons">
-        <i class="fa fa-facebook"></i>
-        <i class="fa fa-twitter"></i>
-        <i class="fa fa-instagram"></i>
-        <i class="fa fa-linkedin"></i>
-    </div>   
-    
-</section>
-<!-----------------JavaScript para el Menu-------------->
+    <!-----------------FOOTER------------------->
+    <section class="footer">
+        <h4> NOSOSTROS</h4>
+        <p>
+            Somos una institución dedicada a proporcionar una educación integral y de alta calidad.
+            <br> Nuestro compromiso es con la formación de estudiantes preparados para enfrentar los retos del futuro.
+        </p>
+        <div class="icons">
+            <i class="fa fa-facebook"></i>
+            <i class="fa fa-twitter"></i>
+            <i class="fa fa-instagram"></i>
+            <i class="fa fa-linkedin"></i>
+        </div>
 
-    <script>        
+    </section>
+    <!-----------------JavaScript para el Menu-------------->
+
+    <script>
         var navLinks = document.getElementById("navLinks"); I
         function showMenu() {
             navLinks.style.right = "0";
         }
         function hideMenu() {
-            navLinks.style.right = "-200px";       
+            navLinks.style.right = "-200px";
         }
     </script>
 
 </body>
+
 </html>

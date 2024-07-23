@@ -7,6 +7,8 @@ import java.util.Set;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -46,52 +49,55 @@ public class Personal {
 	@Column(name = "pers_email")
 	private String email;
 
+	@Column(name = "pers_direccion")
+	private String direccion;
+
 	@Column(name = "pers_fecha_nacimiento")
 	private LocalDateTime fechaNacimiento;
 
 	@Column(name = "pers_genero")
 	private String genero;
 
-	@Column(name = "pers_direccion")
-	private String direccion;
-
 	@Column(name = "pers_fecha_login")
 	private LocalDateTime fechaLogin = LocalDateTime.now();
 
-	// cifrado RSA
-
 	@NotEmpty
-	@Column(name = "repr_password")
+	@Column(name = "pers_telefono")
+	private String telefono;
+
+	@Column(name = "pers_enabled")
+    private boolean enabled = true;
+
+	// cifrado RSA
+	@NotEmpty
+	@Column(name = "pers_password")
 	private String password;
 
 	// relaciones
-	@OneToOne(mappedBy = "personal", cascade = CascadeType.ALL)
-	private Doctor doctor;
+	// @OneToOne(mappedBy = "personal", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	// private Doctor doctor;
 
-	@OneToOne(mappedBy = "personal", cascade = CascadeType.ALL)
-	private Contador contador;
+	// @OneToOne(mappedBy = "personal", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	// private Contador contador;
 
-	@OneToOne(mappedBy = "personal", cascade = CascadeType.ALL)
-	private Profesor profesor;
+	// @OneToOne(mappedBy = "personal", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	// private Profesor profesor;
 
-	@OneToOne(mappedBy = "personal", cascade = CascadeType.ALL)
-	private Bibliotecario bibliotecario;
+	// @OneToOne(mappedBy = "personal", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	// private Bibliotecario bibliotecario;
 
-	@OneToOne(mappedBy = "personal", cascade = CascadeType.ALL)
-	private Autoridad autoridad;
+	// @OneToOne(mappedBy = "personal", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	// private Autoridad autoridad;
 
-	@OneToOne(mappedBy = "personal", cascade = CascadeType.ALL)
-	private Asesor asesor;
+	// @OneToOne(mappedBy = "personal", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	// private Asesor asesor;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "personal_roles",
-		joinColumns = @JoinColumn(name = "personal_id"), 
-		inverseJoinColumns = @JoinColumn(name = "role_id"), 
-		uniqueConstraints = @UniqueConstraint(columnNames = {"personal_id", "rol_id" }))
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "personal_roles", joinColumns = @JoinColumn(name = "personal_id"), inverseJoinColumns = @JoinColumn(name = "role_id"), uniqueConstraints = @UniqueConstraint(columnNames = {
+			"personal_id", "rol_id" }))
 	private Set<Rol> roles = new HashSet<>();
 
 	// get y set
-
 	public Integer getId() {
 		return id;
 	}
@@ -148,53 +154,53 @@ public class Personal {
 		this.direccion = direccion;
 	}
 
-	public Doctor getDoctor() {
-		return doctor;
-	}
+	// public Doctor getDoctor() {
+	// 	return doctor;
+	// }
 
-	public void setDoctor(Doctor doctor) {
-		this.doctor = doctor;
-	}
+	// public void setDoctor(Doctor doctor) {
+	// 	this.doctor = doctor;
+	// }
 
-	public Contador getContador() {
-		return contador;
-	}
+	// public Contador getContador() {
+	// 	return contador;
+	// }
 
-	public void setContador(Contador contador) {
-		this.contador = contador;
-	}
+	// public void setContador(Contador contador) {
+	// 	this.contador = contador;
+	// }
 
-	public Profesor getProfesor() {
-		return profesor;
-	}
+	// public Profesor getProfesor() {
+	// 	return profesor;
+	// }
 
-	public void setProfesor(Profesor profesor) {
-		this.profesor = profesor;
-	}
+	// public void setProfesor(Profesor profesor) {
+	// 	this.profesor = profesor;
+	// }
 
-	public Bibliotecario getBibliotecario() {
-		return bibliotecario;
-	}
+	// public Bibliotecario getBibliotecario() {
+	// 	return bibliotecario;
+	// }
 
-	public void setBibliotecario(Bibliotecario bibliotecario) {
-		this.bibliotecario = bibliotecario;
-	}
+	// public void setBibliotecario(Bibliotecario bibliotecario) {
+	// 	this.bibliotecario = bibliotecario;
+	// }
 
-	public Autoridad getAutoridad() {
-		return autoridad;
-	}
+	// public Autoridad getAutoridad() {
+	// 	return autoridad;
+	// }
 
-	public void setAutoridad(Autoridad autoridad) {
-		this.autoridad = autoridad;
-	}
+	// public void setAutoridad(Autoridad autoridad) {
+	// 	this.autoridad = autoridad;
+	// }
 
-	public Asesor getAsesor() {
-		return asesor;
-	}
+	// public Asesor getAsesor() {
+	// 	return asesor;
+	// }
 
-	public void setAsesor(Asesor asesor) {
-		this.asesor = asesor;
-	}
+	// public void setAsesor(Asesor asesor) {
+	// 	this.asesor = asesor;
+	// }
 
 	public String getEmail() {
 		return email;
@@ -226,6 +232,22 @@ public class Personal {
 
 	public void setRoles(Set<Rol> roles) {
 		this.roles = roles;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 }

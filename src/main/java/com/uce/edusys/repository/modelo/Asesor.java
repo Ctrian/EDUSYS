@@ -50,9 +50,9 @@ public class Asesor {
 	private String email;
 
 	// relaciones
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ases_id_personal")
-	Personal personal;
+	// @OneToOne(cascade = CascadeType.ALL)
+	// @JoinColumn(name = "ases_id_personal")
+	// Personal personal;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ases_id_rrhh")

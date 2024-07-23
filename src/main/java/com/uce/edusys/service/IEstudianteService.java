@@ -20,4 +20,6 @@ public interface IEstudianteService {
 
 	// encontrar todos los Estudiantes
 	public List<Estudiante> encontrarTodos();
+
+	boolean existsByCedula(String cedula);
 }

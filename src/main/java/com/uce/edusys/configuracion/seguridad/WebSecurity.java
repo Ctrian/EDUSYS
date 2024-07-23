@@ -9,7 +9,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -37,18 +39,35 @@ public class WebSecurity {
                                                 .requestMatchers("/",
                                                                 "/menu/botones", "/menu/contactar",
                                                                 "menu/formulario", "menu/insertar",
+
                                                                 "/representantes/space",
                                                                 "/representantes/login",
                                                                 "/representantes/signUp", "/representantes/insertar",
-                                                                "/representantes/tyc", "/representantes/fPassword",
+                                                                "/representantes/tyc",
+                                                                "/representantes/reset-password",
+                                                                "/representantes/reset-request",
+                                                                "/representantes/reset-password/confirm",
+                                                                "/representantes/reset-password/reset",
+
+                                                                "/personal/space",
+                                                                "/personal/login",
+                                                                "/personal/signUp", "/personal/registrarP",
+
+                                                                "/estudiantes/space", "/estudiantes/login",
+
                                                                 "/error",
                                                                 "/resources/**",
                                                                 "/images/**",
                                                                 "/static/css/**")
                                                 .permitAll()
-                                                .requestMatchers("/representantes/cuentaR", "/representantes/pagos",
-                                                                "/representantes/matricular", "/representantes/enviado")
+                                                .requestMatchers("/representantes/cuentaR",
+                                                                "/representantes/registrarE",
+                                                                "/representantes/estadoRegistro",
+                                                                "/representantes/matricular", "/representantes/enviado",
+                                                                "/representantes/pagos")
                                                 .hasRole("REPRESENTANTE")
+                                                .requestMatchers("/personal/cuentaPer")
+                                                .hasAnyRole("PERSONAL")
                                                 .requestMatchers("/estudiantes/cuentaE").hasRole("ESTUDIANTE")
                                                 .requestMatchers("/profesores/cuentaP").hasRole("PROFESOR")
                                                 .anyRequest().authenticated())
@@ -57,16 +76,26 @@ public class WebSecurity {
                                                 .loginPage("/login")
                                                 .usernameParameter("email")
                                                 .passwordParameter("password")
-                                                .defaultSuccessUrl("/representantes/cuentaR", true)
-                                                .failureUrl("/representantes/login?error=true")
+                                                .loginProcessingUrl("/perform_login")
+                                                .defaultSuccessUrl("/default", true)
+                                                .failureUrl("/login?error=true") // Redirigir a /login con un parámetro
+                                                                                 // de error
+                                                .successHandler(myAuthenticationSuccessHandler())
+                                                .failureHandler(myAuthenticationFailureHandler())
                                                 .permitAll())
 
                                 .logout(logout -> logout
-                                                .logoutUrl("/logout")
-                                                .logoutSuccessUrl("/representantes/login?logout=true")
+                                                .logoutUrl("/perform_logout")
+                                                .logoutSuccessUrl("/menu/botones") // URL de redirección después de
+                                                                                   // logout
+                                                .deleteCookies("JSESSIONID")
                                                 .permitAll())
 
-                                .csrf(csrf -> csrf.ignoringRequestMatchers("/send-email"));
+                                .exceptionHandling(exceptionHandling -> exceptionHandling
+                                                .authenticationEntryPoint(new CustomAuthenticationEntryPoint()))
+
+                                .csrf(csrf -> csrf
+                                                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()));
 
                 return http.build();
         }
@@ -74,6 +103,11 @@ public class WebSecurity {
         @Bean
         public AuthenticationSuccessHandler myAuthenticationSuccessHandler() {
                 return new MySimpleUrlAuthenticationSuccessHandler();
+        }
+
+        @Bean
+        public AuthenticationFailureHandler myAuthenticationFailureHandler() {
+                return new MySimpleUrlAuthenticationFailureHandler();
         }
 
 }

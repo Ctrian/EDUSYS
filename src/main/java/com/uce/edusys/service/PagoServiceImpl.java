@@ -15,24 +15,30 @@ import com.uce.edusys.repository.modelo.Pago;
 public class PagoServiceImpl implements IPagoService {
 
     @Autowired
-    private IPagoRepository iPagoRepository;
-
-    @Autowired
-    private IMatriculaRepository iMatriculaRepository; 
+    private IPagoRepository pagoRepository;
 
     @Override
     @Transactional
     public void registrarPago(Pago pago) {
-        iPagoRepository.save(pago);
-        Matricula matricula = pago.getMatricula();
-        matricula.actualizarEstado();
-        iMatriculaRepository.save(matricula);
+        pagoRepository.save(pago);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Pago> obtenerPagosPorMatricula(Integer id) {
-        return iPagoRepository.findByMatriculaId(id);
+        return pagoRepository.findByMatriculaId(id);
     }
-    
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Pago> obtenerPagosPorFactura(Integer facturaId) {
+        return pagoRepository.findByFacturaId(facturaId);
+    }
+
+	@Override
+	public List<Pago> obtenerPagosPorRepresentante(Integer representanteId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

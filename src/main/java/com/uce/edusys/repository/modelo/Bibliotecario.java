@@ -50,9 +50,9 @@ public class Bibliotecario {
 	private String email;
 
 	// relaciones
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "bibl_id_personal")
-	private Personal personal;
+	// @OneToOne(cascade = CascadeType.ALL)
+	// @JoinColumn(name = "bibl_id_personal")
+	// private Personal personal;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "conta_id_contabilidad")

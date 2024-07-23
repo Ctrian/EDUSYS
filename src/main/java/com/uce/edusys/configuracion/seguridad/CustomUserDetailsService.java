@@ -7,7 +7,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.uce.edusys.repository.modelo.Personal;
 import com.uce.edusys.repository.modelo.Representante;
+import com.uce.edusys.service.IPersonalService;
 import com.uce.edusys.service.IRepresentanteService;
 
 import org.slf4j.Logger;
@@ -16,12 +18,13 @@ import org.slf4j.Logger;
 public class CustomUserDetailsService implements UserDetailsService {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);
-
     private final IRepresentanteService iRepresentanteService;
+    private final IPersonalService iPersonalService;
 
     @Autowired
-    public CustomUserDetailsService(IRepresentanteService representanteService) {
+    public CustomUserDetailsService(IRepresentanteService representanteService, IPersonalService personalService) {
         this.iRepresentanteService = representanteService;
+        this.iPersonalService = personalService;
     }
 
     @Override
@@ -30,22 +33,18 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         // Lógica para cargar el usuario desde la base de datos usando el email
         Representante representante = iRepresentanteService.encontrarPorEmail(email);
-        if (representante == null) {
-            logger.error("Usuario no encontrado: {}", email);
-            throw new UsernameNotFoundException("Usuario X no encontrado" + email);
+        if (representante != null) {
+            logger.info("Usuario Representante encontrado: {}", representante);
+            return new CustomUserDetails(representante);
         }
 
-        logger.info("Usuario XXXXXXX encontrado: {}", representante);
+        Personal personal = iPersonalService.encontrarPorEmail(email);
+        if (personal != null) {
+            logger.info("Usuario Personal encontrado: {}", personal);
+            return new CustomUserDetails(personal);
+        }
 
-        // // Aquí deberías cargar las autoridades (roles) del usuario
-        // Set<SimpleGrantedAuthority> authorities = representante.getRoles().stream()
-        // .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getNombre()))
-        // .collect(Collectors.toSet());
-
-        // System.out.println("Contraseña cifrada en la base de datos: " + representante.getPassword()
-        //         + "//////////////////////////////////");
-
-        return new CustomUserDetails(representante);
+        logger.error("Usuario no encontrado: {}", email);
+            throw new UsernameNotFoundException("Usuario X no encontrado con email: " + email);
     }
-
 }

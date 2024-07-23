@@ -9,4 +9,9 @@ public interface IPagoService {
     public void registrarPago(Pago pago);
 
     public List<Pago> obtenerPagosPorMatricula(Integer id);
+
+    public List<Pago> obtenerPagosPorFactura(Integer facturaId);
+    
+    List<Pago> obtenerPagosPorRepresentante(Integer representanteId);
+    
 }

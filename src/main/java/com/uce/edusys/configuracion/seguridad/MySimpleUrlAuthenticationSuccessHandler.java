@@ -17,24 +17,27 @@ import java.util.Collection;
 @Configuration
 @EnableWebSecurity
 public class MySimpleUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-    
+
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-    
+
     @Override
-    protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+    protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+            throws IOException {
         String targetUrl = determineTargetUrl(authentication);
- 
+
         if (response.isCommitted()) {
             return;
         }
- 
+
         redirectStrategy.sendRedirect(request, response, targetUrl);
     }
-    
+
     protected String determineTargetUrl(Authentication authentication) {
         boolean isRepresentante = false;
         boolean isEstudiante = false;
-        
+        boolean isPersonal = false;
+        boolean isAdmin = false;
+
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (GrantedAuthority grantedAuthority : authorities) {
             if (grantedAuthority.getAuthority().equals("ROLE_REPRESENTANTE")) {
@@ -43,15 +46,36 @@ public class MySimpleUrlAuthenticationSuccessHandler extends SimpleUrlAuthentica
             } else if (grantedAuthority.getAuthority().equals("ROLE_ESTUDIANTE")) {
                 isEstudiante = true;
                 break;
+            } else if (grantedAuthority.getAuthority().equals("ROLE_PERSONAL")) {
+                isPersonal = true;
+                break;
+            } else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
+                isAdmin = true;
+                break;
             }
         }
-        
+
         if (isRepresentante) {
             return "/representantes/cuentaR";
         } else if (isEstudiante) {
             return "/estudiantes/cuentaE";
+        } else if (isPersonal) {
+            return "/personal/cuentaPer";
+        } else if (isAdmin) {
+            return "/admin/administrarP";
         } else {
             throw new IllegalStateException();
         }
     }
+
+    @Override
+    public void setRedirectStrategy(RedirectStrategy redirectStrategy) {
+        this.redirectStrategy = redirectStrategy;
+    }
+    
+    @Override
+    protected RedirectStrategy getRedirectStrategy() {
+        return redirectStrategy;
+    }
+    
 }

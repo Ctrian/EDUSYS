@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/estilos.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <title>Olvidé mi contraseña</title>
+</head>
+
+<body>
+    <section class="recuperarContraseña-header">
+        <nav>
+            <a href="/menu/botones"><img src="/images/logotipo.png "></a>
+            <h3>LICEO CENTRAL DE CIENCIAS Y ARTE</h3>
+        </nav>
+    </section>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="mb-0 text-center">¿Olvido su contraseña?</h1>
+                        <p class="text-center text-muted">Ingrese tu correo electrónico para recuperar la cuenta<br>
+                            Si el correo electrónico esta asociado a nuestros servicios se
+                            te enviará un link de de cambio de contraseña al correo electrónico ingresado</p>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/representantes/reset-request}" th:method="POST">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Correo electrónico</label>
+                                <input type="email" id="email" name="email" class="form-control"
+                                    placeholder="ejemplo@dominio.com" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Recuperar</button>
+                        </form>
+                        <p th:if="${message}" th:text="${message}"></p>
+
+                        <hr class="my-4">
+                        <div class="mt-4 text-center text-sm">
+                            ¿Ya tienes una cuenta?
+                            <a href="/representantes/login" class="underline">Sign-In</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>

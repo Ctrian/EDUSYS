@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/estilos.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <title>Solicitudes de Matrícula</title>
+</head>
+
+<body>
+    <section class="padres-header">
+        <nav>
+            <a th:href="@{/menu/botones}"><img th:src="@{/images/logotipo.png}"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="#"> NOTIFICACIONES</a></li>
+                    <li><a href="#"> PERFIL</a></li>
+                    <li>
+                        <form th:action="@{/perform_logout}" method="POST">
+                            <button type="submit" class="logout-button">SALIR</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <div class="text-box">
+            <h1>Cuenta PERSONAL</h1>
+            <br />
+            <br></br>
+            <br></br>
+            <br />
+        </div>
+    </section>
+    <!----------------- MENSAJE DE CIERRE DE SESIÓN ------------------->
+    <div th:if="${param.logout}">
+        <div class="alert alert-danger" role="alert">
+            Has cerrado sesión con éxito.
+        </div>
+    </div>
+    <section class="container my-5">
+        <h1>Solicitudes de Matrícula Pendientes</h1>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Representante</th>
+                        <th>Estudiante</th>
+                        <th>Fecha de Solicitud</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="solicitud : ${solicitudesPendientes}">
+                        <td th:text="${solicitud.representante.nombre}">Representante</td>
+                        <td th:text="${solicitud.estudiante.nombre}">Estudiante</td>
+                        <td th:text="${solicitud.fechaFormateada}">Fecha</td>
+                        <td>
+                            <form th:action="@{/personal/aprobarSolicitud}" th:method="POST" class="d-inline">
+                                <input type="hidden" th:value="${solicitud.id}" name="solicitudId" />
+                                <button type="submit" class="btn btn-success">Aprobar</button>
+                            </form>
+                            <form th:action="@{/personal/rechazarSolicitud}" th:method="POST" class="d-inline">
+                                <input type="hidden" th:value="${solicitud.id}" name="solicitudId" />
+                                <button type="submit" class="btn btn-danger">Rechazar</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <!-----------------FOOTER------------------->
+    <section class="footer">
+        <h4> NOSOSTROS</h4>
+        <p>
+            Somos una institución dedicada a proporcionar una educación integral y de alta calidad.
+            <br> Nuestro compromiso es con la formación de estudiantes preparados para enfrentar los retos del futuro.
+        </p>
+        <div class="icons">
+            <i class="fa fa-facebook"></i>
+            <i class="fa fa-twitter"></i>
+            <i class="fa fa-instagram"></i>
+            <i class="fa fa-linkedin"></i>
+        </div>
+
+    </section>
+    <!-----------------JavaScript para el Menu-------------->
+
+    <script>
+        var navLinks = document.getElementById("navLinks");
+        function showMenu() {
+            navLinks.style.right = "0";
+        }
+        function hideMenu() {
+            navLinks.style.right = "-200px";
+        }
+    </script>
+</body>
+
+</html>

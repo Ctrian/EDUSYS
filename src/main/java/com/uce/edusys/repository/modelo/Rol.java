@@ -31,6 +31,9 @@ public class Rol {
     @ManyToMany(mappedBy = "roles")
     private Set<Representante> representantes = new HashSet<>();
 
+    @ManyToMany(mappedBy = "roles")
+    private Set<Estudiante> estudiantes = new HashSet<>();
+
     // get y set
 
     public Long getId() {

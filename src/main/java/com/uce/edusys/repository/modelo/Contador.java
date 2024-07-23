@@ -50,9 +50,9 @@ public class Contador {
 	private String email;
 
 	// relaciones
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "doct_id_personal")
-	Personal personal;
+	// @OneToOne(cascade = CascadeType.ALL)
+	// @JoinColumn(name = "doct_id_personal")
+	// Personal personal;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "conta_id_contabilidad")

@@ -51,9 +51,9 @@ public class Autoridad {
 	private String email;
 
 	// relaciones
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "auto_id_personal")
-	private Personal personal;
+	// @OneToOne(cascade = CascadeType.ALL)
+	// @JoinColumn(name = "auto_id_personal")
+	// private Personal personal;
 
 	@OneToMany(mappedBy = "autoridad", cascade = CascadeType.ALL)
 	private List<Departamento> departamentos;

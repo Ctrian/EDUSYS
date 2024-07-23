@@ -62,34 +62,36 @@ public class Representante {
 	@Column(name = "repr_telefono")
 	private String telefono;
 
-	// cifrado RSA
+	@Column(name = "repr_enabled")
+	private boolean enabled = true;
 
+	// cifrado RSA
 	@NotEmpty
 	@Column(name = "repr_password")
 	private String password;
 
 	// relaciones
-	@OneToMany(mappedBy = "representante", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "representante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Estudiante> estudiantes;
 
-	@OneToMany(mappedBy = "representante", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "representante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<SolicitudMatricula> solicitudMatriculas;
+
+	@OneToMany(mappedBy = "representante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Matricula> matriculas;
 
-	@OneToMany(mappedBy = "representante", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "representante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Transferencia> transferencias;
 
-	@OneToMany(mappedBy = "representante", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "representante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Repre_Conta> repre_Contas;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "representante_roles",
-		joinColumns = @JoinColumn(name = "representante_id"), 
-		inverseJoinColumns = @JoinColumn(name = "role_id"), 
-		uniqueConstraints = @UniqueConstraint(columnNames = {"representante_id", "rol_id" }))
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "representante_roles", joinColumns = @JoinColumn(name = "representante_id"), inverseJoinColumns = @JoinColumn(name = "role_id"), uniqueConstraints = @UniqueConstraint(columnNames = {
+			"representante_id", "rol_id" }))
 	private Set<Rol> roles = new HashSet<>();
 
 	// get y set
-
 	public Integer getId() {
 		return id;
 	}
@@ -200,6 +202,22 @@ public class Representante {
 
 	public void setRoles(Set<Rol> roles) {
 		this.roles = roles;
+	}
+
+	public List<SolicitudMatricula> getSolicitudMatriculas() {
+		return solicitudMatriculas;
+	}
+
+	public void setSolicitudMatriculas(List<SolicitudMatricula> solicitudMatriculas) {
+		this.solicitudMatriculas = solicitudMatriculas;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	// toString

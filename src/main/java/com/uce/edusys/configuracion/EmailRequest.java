@@ -1,4 +1,4 @@
-package com.uce.edusys.repository.modelo;
+package com.uce.edusys.configuracion;
 
 public class EmailRequest {
     

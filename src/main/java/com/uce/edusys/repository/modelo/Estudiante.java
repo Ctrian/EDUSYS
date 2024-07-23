@@ -18,6 +18,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
@@ -74,16 +75,28 @@ public class Estudiante {
 	@JoinColumn(name = "estu_id_representante")
 	private Representante representante;
 
-	@OneToMany(mappedBy = "estudiante")
-	private List<Matricula> matriculas;
+	@OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<SolicitudMatricula> solicitudMatriculas;
 
-	@OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL)
+	/*
+	 * El estudiante puede estar matriculado en una sola oferta académica x vez, but
+	 * si en muchos cursos
+	 */
+
+	@OneToOne(mappedBy = "estudiante", fetch = FetchType.LAZY)
+	private Matricula matricula;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "estudiante_curso", joinColumns = @JoinColumn(name = "estudiante_id"), inverseJoinColumns = @JoinColumn(name = "curso_id"))
+	private List<Curso> cursos;
+
+	@OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Estu_Enfe> estu_Enfes;
 
-	@OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Estu_Bibl> estu_Bibls;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "estudiante_roles", joinColumns = @JoinColumn(name = "estudiante_id"), inverseJoinColumns = @JoinColumn(name = "role_id"), uniqueConstraints = @UniqueConstraint(columnNames = {
 			"estudiante_id", "rol_id" }))
 	private Set<Rol> roles = new HashSet<>();
@@ -97,7 +110,6 @@ public class Estudiante {
 	// private Taller taller;
 
 	// get y set
-
 	public String getNombre() {
 		return nombre;
 	}
@@ -154,12 +166,20 @@ public class Estudiante {
 		this.representante = representante;
 	}
 
-	public List<Matricula> getMatriculas() {
-		return matriculas;
+	public Matricula getMatricula() {
+		return matricula;
 	}
 
-	public void setMatriculas(List<Matricula> matriculas) {
-		this.matriculas = matriculas;
+	public void setMatricula(Matricula matricula) {
+		this.matricula = matricula;
+	}
+
+	public List<Curso> getCursos() {
+		return cursos;
+	}
+
+	public void setCursos(List<Curso> cursos) {
+		this.cursos = cursos;
 	}
 
 	public List<Estu_Enfe> getEstu_Enfes() {
@@ -224,6 +244,14 @@ public class Estudiante {
 
 	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public List<SolicitudMatricula> getSolicitudMatriculas() {
+		return solicitudMatriculas;
+	}
+
+	public void setSolicitudMatriculas(List<SolicitudMatricula> solicitudMatriculas) {
+		this.solicitudMatriculas = solicitudMatriculas;
 	}
 
 	// toString

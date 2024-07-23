@@ -109,6 +109,47 @@ nav .fa{
     }
 }
 
+/*---------MATRICULA----------*/
+
+.mensaje-error {
+    color: rgb(255, 65, 65);
+}
+
+.mensaje-advertencia {
+    color: rgb(6, 52, 94);
+}
+
+.toolAD {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background-color: #03254a;
+    padding: 10px; /* Relleno para el contenedor */
+    position: relative;
+    z-index: 1000;
+}
+
+.textROA {
+    margin-right: 10px; /* Espacio entre el texto y el botón */
+}
+
+.mensaje {
+    color: white;
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border: whitesmoke;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268; /* Color gris más oscuro al pasar el cursor */
+}
+
+/*---------MISION VISION----------*/
+
 .misionVision{
     width: 80%;
     margin: auto;
@@ -124,6 +165,11 @@ nav .fa{
     position: relative;
     overflow: hidden;
     background-color: rgb(205, 211, 234);
+}
+
+/*---------TRANSICIONES----------*/
+.mascotaTransicion-img {
+    padding-bottom: 10px;
 }
 
 /*---------OFERTA ACADÉMICA----------*/
@@ -264,21 +310,32 @@ h3{
     width: 100%;
     text-align: center;
     padding: 30 px 0;
+    color: whitesmoke;
+    background-color: #000000;
 }
 .footer h4 {
-    margin-bottom: 25px;
-    margin-top: 20px;
+    margin-bottom: 10px;
+    margin-top: 50px;
     font-weight: 600;
+    padding-top: 25px;
 }
+
 .icons .fa{
-    color: #040404;
+    color: white;
     margin: 0 13px;
     cursor: pointer;
     padding: 18px 0;
 }
+
+.logoED-img {
+    height: 50px;
+    align-items: center;
+    padding-bottom: 15px;
+}
 /*-------------padres-header------------*/
 .padres-header h3 {
     color: #fff;
+    padding-left: 50px;
 }
 .padres-header{
     height: 50vh;
@@ -342,9 +399,11 @@ h3{
     bottom: 49%;
     opacity: 1;
 }
-/*-------------estudiantes-header------------*/
+
+/*-------------estudiantes-header------------
 .estudiantes-header h3 {
     color: #fff;
+    padding-left: 70px;
 }
 .estudiantes-header{
     height: 50vh;
@@ -353,7 +412,8 @@ h3{
     background-position: center;
     background-size: cover;
     text-align: center;
-}
+}*/
+
 /*---------menu-estudiante----------*/
 .menu-estudiante h2 {
     color: #000000;
@@ -423,7 +483,9 @@ h3{
 /*-------------personal-header------------*/
 .personal-header h3 {
     color: #fff;
+    padding-left: 50px;
 }
+
 .personal-header{
     height: 50vh;
     width: 100%;

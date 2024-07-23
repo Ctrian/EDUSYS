@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.uce.edusys.repository.modelo.Representante;
-import com.uce.edusys.repository.modelo.Rol;
 import com.uce.edusys.configuracion.seguridad.IRolRepository;
 import com.uce.edusys.repository.IRepresentanteRepository;
+import com.uce.edusys.repository.modelo.Representante;
+import com.uce.edusys.repository.modelo.Rol;
 
 @Service
 public class RepresentanteServiceImpl implements IRepresentanteService {
@@ -27,7 +27,7 @@ public class RepresentanteServiceImpl implements IRepresentanteService {
     @Transactional
     public void registrarR(Representante representante) {
         Rol role = iRolRepository.findByNombre("ROLE_REPRESENTANTE");
-        //representante.getRoles().add(role);
+        // representante.getRoles().add(role);
         if (!representante.getRoles().contains(role)) {
             representante.getRoles().add(role);
         }
@@ -68,15 +68,17 @@ public class RepresentanteServiceImpl implements IRepresentanteService {
         return this.iRepresentanteRepository.findAll();
     }
 
-    /* @Override
-    public Page<Representante> encontrarTodos(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return this.iRepresentanteRepository.findAll(pageable);
-    } */
+    /*
+     * @Override
+     * public Page<Representante> encontrarTodos(int page, int size) {
+     * Pageable pageable = PageRequest.of(page, size);
+     * return this.iRepresentanteRepository.findAll(pageable);
+     * }
+     */
 
     // @Override
     // public Page<Representante> encontrarTodos(Pageable pageable) {
-    //     return null;
+    // return null;
     // }
 
 }

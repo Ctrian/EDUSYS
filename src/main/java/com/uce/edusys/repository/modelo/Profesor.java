@@ -51,9 +51,9 @@ public class Profesor {
 	private String email;
 
 	// relaciones
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "prof_id_personal")
-	private Personal personal;
+	// @OneToOne(cascade = CascadeType.ALL)
+	// @JoinColumn(name = "prof_id_personal")
+	// private Personal personal;
 
 	@OneToMany(mappedBy = "profesor", cascade = CascadeType.ALL)
 	private List<Curso> cursos;

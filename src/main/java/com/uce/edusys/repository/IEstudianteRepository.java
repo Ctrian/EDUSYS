@@ -12,5 +12,7 @@ public interface IEstudianteRepository extends JpaRepository<Estudiante, Integer
 
     // encontrar la lista de representados
     public Estudiante findByCedula(String cedula);
+
+    boolean existsByCedula(String cedula);
     
 }

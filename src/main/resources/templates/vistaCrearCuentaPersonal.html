@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="with=device-width, initial-scale = 1.0 ">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/css/estilos.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <title>Crear cuenta</title>
+</head>
+
+<body>
+  <section class="crearCuenta-header">
+    <nav>
+      <a href="/menu/botones"><img src="/images/logotipo.png "></a>
+      <h3>LICEO CENTRAL DE CIENCIAS Y ARTE</h3>
+    </nav>
+    <div class="text-box">
+      <h1>PERSONAL</h1>
+      <br />
+      <br></br>
+      <br></br>
+      <br />
+    </div>
+  </section>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h1 class="mb-0 text-center">Crear cuenta</h1>
+            <p class="text-center text-muted">
+              Ingrese sus datos personales para crear su cuenta.</p>
+          </div>
+          <div class="card-body">
+            <form id="formularioRepresentante" onsubmit="return validarFormulario()" th:action="@{/personal/registrarP}"
+              th:object="${personal}" th:method="POST">
+              <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" id="nombre" class="form-control" onkeypress="return soloLetras(event);"
+                  placeholder="Ingresa tu nombre" name="nombre" maxlength="20" th:field="${personal.nombre}" required />
+              </div>
+              <div class="mb-3">
+                <label for="apellido" class="form-label">Apellido</label>
+                <input type="text" id="apellido" class="form-control" onkeypress="return soloLetras(event);"
+                  placeholder="Ingresa tu apellido" name="apellido" maxlength="20" th:field="${personal.apellido}"
+                  required />
+              </div>
+              <div class="mb-3">
+                <label for="cedula" class="form-label">Cédula</label>
+                <input type="text" id="cedula" class="form-control" placeholder="Ingresa tu cédula"
+                  onkeypress="return soloNumeros(event)" name="cedula" maxlength="10" th:field="${personal.cedula}"
+                  required />
+                <small id="mensajeCedula" class="text-danger"></small>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Correo electrónico</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="ejemplo@dominio.com"
+                  th:field="${personal.email}" required />
+                <small id="mensajeEmail" class="text-danger"></small>
+              </div>
+              <div class="mb-3">
+                <label for="direccion" class="form-label">Dirección</label>
+                <input type="text" id="direccion" class="form-control" onkeypress="return numerosLetras(event);"
+                  placeholder="Ingresa tu dirección" th:field="${personal.direccion}" required />
+              </div>
+              <div class="mb-3">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input type="tel" id="telefono" class="form-control" onkeypress="return soloNumeros(event)"
+                  placeholder="Ingresa tu teléfono" maxlength="10" th:field="${personal.telefono}" required />
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" id="password" name="password" class="form-control"
+                  placeholder="Ingresa tu contraseña" minlength="6" maxlength="20" th:field="${personal.password}"
+                  required />
+              </div>
+              <div class="mb-3">
+                <button type="submit" class="btn btn-primary w-100">Guardar</button>
+              </div>
+            </form>
+
+            <script>
+              function soloLetras(event) {
+                var letra = event.keyCode;
+                // Acepta letras mayúsculas, minúsculas, tecla de retroceso, espacio y acentos
+                if ((letra >= 65 && letra <= 90) || (letra >= 97 && letra <= 122) || letra === 8 || letra === 32 ||
+                  (letra >= 192 && letra <= 255) || (letra >= 128 && letra <= 165)) {
+                  return true;
+                } else {
+                  return false;
+                }
+              }
+
+              function soloNumeros(event) {
+                var letra = event.keyCode;
+                if (letra >= 48 && letra <= 57) {
+                  return true;
+                } else {
+                  return false;
+                }
+              }
+
+              function numerosLetras(event) {
+                var letra = event.keyCode;
+                // Acepta letras mayúsculas, minúsculas, tecla de retroceso, espacio y acentos
+                if ((letra >= 65 && letra <= 90) || (letra >= 97 && letra <= 122) || letra === 8 || letra === 32 ||
+                  (letra >= 192 && letra <= 255) || (letra >= 128 && letra <= 165) || (letra >= 48 && letra <= 57) || letra === 45) {
+                  return true;
+                } else {
+                  return false;
+                }
+              }
+
+              function validarCedulaEcuatoriana(cedula) {
+                if (cedula.length !== 10) {
+                  return false;
+                }
+
+                const coeficientes = [2, 1, 2, 1, 2, 1, 2, 1, 2];
+                let suma = 0;
+
+                for (let i = 0; i < coeficientes.length; i++) {
+                  let valor = parseInt(cedula.charAt(i)) * coeficientes[i];
+                  suma += (valor >= 10) ? valor - 9 : valor;
+                }
+
+                const digitoVerificador = parseInt(cedula.charAt(9));
+                const resultado = (suma % 10 === 0) ? 0 : 10 - (suma % 10);
+
+                return resultado === digitoVerificador;
+              }
+
+              document.getElementById('cedula').addEventListener('input', function (e) {
+                this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
+
+                const cedula = e.target.value;
+                const mensajeCedula = document.getElementById('mensajeCedula');
+                const regexCedula = /^\d{10}$/;
+
+                if (!regexCedula.test(cedula)) {
+                  mensajeCedula.textContent = 'Ingrese correctamente el número de cédula (10 dígitos numéricos)';
+                } else {
+                  if (!validarCedulaEcuatoriana(cedula)) {
+                    mensajeCedula.textContent = 'Ingrese una cédula válida ecuatoriana';
+                  } else {
+                    mensajeCedula.textContent = '';
+                  }
+                }
+              });
+
+              document.getElementById('email').addEventListener('input', function (e) {
+                const email = e.target.value;
+                const mensajeEmail = document.getElementById('mensajeEmail');
+                const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                if (!regexEmail.test(email)) {
+                  mensajeEmail.textContent = 'Ingrese un correo electrónico válido';
+                } else {
+                  mensajeEmail.textContent = '';
+                }
+              });
+
+              document.getElementById('telefono').addEventListener('input', function (e) {
+                this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
+              });
+
+              function validarFormulario() {
+                const cedula = document.getElementById('cedula').value;
+                const nombre = document.getElementById('nombre').value;
+                const apellido = document.getElementById('apellido').value;
+                const telefono = document.getElementById('telefono').value;
+
+                const mensajeErrorCedula = "Ingrese solo números en total 10 y deben conformar un ID ecuatoriano";
+                const mensajeErrorTelefono = "Ingrese un número de teléfono de 10 dígitos";
+                const mensajeErrorNombre = "Ingrese solo letras y espacios en el nombre";
+                const mensajeErrorApellido = "Ingrese solo letras y espacios en el apellido";
+
+                const regexSoloLetras = /^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$/;
+
+                if (!/^\d{10}$/.test(cedula) || !validarCedulaEcuatoriana(cedula)) {
+                  alert("El campo de cédula es incorrecto \nIngrese solo números en total 10 y deben conformar un ID ecuatoriano");
+                  return false;
+                }
+
+                if (!regexSoloLetras.test(nombre)) {
+                  alert(mensajeErrorNombre);
+                  return false;
+                }
+
+                if (!regexSoloLetras.test(apellido)) {
+                  alert(mensajeErrorApellido);
+                  return false;
+                }
+
+                if (!/^\d{10}$/.test(telefono)) {
+                  alert(mensajeErrorTelefono);
+                  return false;
+                }
+
+                return true;
+              }
+            </script>
+
+            <hr class="my-4">
+            <div class="mt-4 text-center text-sm">
+              Al crear una cuenta, aceptas nuestra
+              <a href="/representantes/tyc" class="underline">Política de privacidad</a>
+            </div>
+
+            <div class="mt-4 text-center text-sm">
+              ¿Ya tienes una cuenta?
+              <a href="/representantes/login" class="underline">Iniciar sesión</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-----------------FOOTER------------------->
+  <section class="footer">
+    <h4> NOSOSTROS</h4>
+    <p>
+      Somos una institución dedicada a proporcionar una educación integral y de alta calidad.
+      <br> Nuestro compromiso es con la formación de estudiantes preparados para enfrentar los retos del futuro.
+    </p>
+    <div class="icons">
+      <i class="fa fa-facebook"></i>
+      <i class="fa fa-twitter"></i>
+      <i class="fa fa-instagram"></i>
+      <i class="fa fa-linkedin"></i>
+    </div>
+
+  </section>
+</body>
+
+</html>

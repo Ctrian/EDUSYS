@@ -17,6 +17,13 @@
       <a href="/menu/botones"><img src="/images/logotipo.png "></a>
       <h3>LICEO CENTRAL DE CIENCIAS Y ARTE</h3>
     </nav>
+    <div class="text-box">
+      <h1>REPRESENTANTES</h1>
+      <br />
+      <br></br>
+      <br></br>
+      <br />
+    </div>
   </section>
   <div class="container mt-5">
     <div class="row justify-content-center">
@@ -33,19 +40,20 @@
               <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
                 <input type="text" id="nombre" class="form-control" onkeypress="return soloLetras(event);"
-                  placeholder="Ingresa tu nombre" name="nombre" maxlength="20" pattern="^[a-zA-Z\s]{2,254}"
-                  th:field="${representante.nombre}" required />
+                  placeholder="Ingresa tu nombre" name="nombre" maxlength="20" th:field="${representante.nombre}"
+                  required />
               </div>
               <div class="mb-3">
                 <label for="apellido" class="form-label">Apellido</label>
                 <input type="text" id="apellido" class="form-control" onkeypress="return soloLetras(event);"
-                  placeholder="Ingresa tu apellido" name="apellido" maxlength="20" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+"
-                  th:field="${representante.apellido}" required />
+                  placeholder="Ingresa tu apellido" name="apellido" maxlength="20" th:field="${representante.apellido}"
+                  required />
               </div>
               <div class="mb-3">
                 <label for="cedula" class="form-label">Cédula</label>
-                <input type="text" id="cedula" class="form-control" placeholder="Ingresa tu cédula" name="cedula"
-                  maxlength="10" pattern="\d{10}" th:field="${representante.cedula}" required />
+                <input type="text" id="cedula" class="form-control" placeholder="Ingresa tu cédula"
+                  onkeypress="return soloNumeros(event)" name="cedula" maxlength="10" th:field="${representante.cedula}"
+                  required />
                 <small id="mensajeCedula" class="text-danger"></small>
               </div>
               <div class="mb-3">
@@ -61,8 +69,8 @@
               </div>
               <div class="mb-3">
                 <label for="telefono" class="form-label">Teléfono</label>
-                <input type="tel" id="telefono" class="form-control" placeholder="Ingresa tu teléfono" maxlength="10"
-                  pattern="\d{10}" th:field="${representante.telefono}" required />
+                <input type="tel" id="telefono" class="form-control" onkeypress="return soloNumeros(event)"
+                  placeholder="Ingresa tu teléfono" maxlength="10" th:field="${representante.telefono}" required />
               </div>
               <div class="mb-3">
                 <label for="password" class="form-label">Contraseña</label>
@@ -81,6 +89,15 @@
                 // Acepta letras mayúsculas, minúsculas, tecla de retroceso, espacio y acentos
                 if ((letra >= 65 && letra <= 90) || (letra >= 97 && letra <= 122) || letra === 8 || letra === 32 ||
                   (letra >= 192 && letra <= 255) || (letra >= 128 && letra <= 165)) {
+                  return true;
+                } else {
+                  return false;
+                }
+              }
+
+              function soloNumeros(event) {
+                var letra = event.keyCode;
+                if (letra >= 48 && letra <= 57) {
                   return true;
                 } else {
                   return false;

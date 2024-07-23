@@ -35,7 +35,6 @@ public class EstudianteServiceImpl implements IEstudianteService {
     @Transactional
     public void registrarE(Estudiante estudiante) {
         Rol role = iRolRepository.findByNombre("ROLE_ESTUDIANTE");
-        // representante.getRoles().add(role);
         if (!estudiante.getRoles().contains(role)) {
             estudiante.getRoles().add(role);
         }
@@ -48,20 +47,6 @@ public class EstudianteServiceImpl implements IEstudianteService {
         estudiante.setPassword(passwordEncoder.encode(password));
 
         this.iEstudianteRepository.save(estudiante);
-
-        // Aquí puedes enviar el correo con las credenciales al estudiante y al
-        // representante
-
-        // Enviar correos electrónicos
-        /*
-         * String mensaje = String.
-         * format("Bienvenido %s %s! Sus credenciales son: Email: %s, Contraseña: %s",
-         * estudiante.getNombre(), estudiante.getApellido(), email, password);
-         * emailService.sendSimpleMessage(email, "Credenciales de acceso", mensaje);
-         * emailService.enviarCorreo(estudiante.getRepresentante().getEmail(),
-         * "Registro de estudiante", mensaje);
-         */
-
     }
 
     @Override
@@ -104,20 +89,29 @@ public class EstudianteServiceImpl implements IEstudianteService {
     }
 
     private String generateStudentEmail(String nombre, String apellido) {
-        // Divide el nombre en partes usando el espacio como delimitador
-        String[] partesNombre = nombre.split(" ");
+        // Limpia y divide los nombres y apellidos
+        String[] partesNombre = nombre.trim().split("\\s+");
+        String[] partesApellido = apellido.trim().split("\\s+");
 
-        // Toma la primera letra de cada parte del nombre
-        StringBuilder iniciales = new StringBuilder();
-        for (String parte : partesNombre) {
-            if (!parte.isEmpty()) {
-                iniciales.append(parte.charAt(0));
-            }
-        }
+        // Toma la primera letra del primer nombre
+        String primeraLetraNombre = partesNombre.length > 0 ? partesNombre[0].substring(0, 1) : "";
+        // Toma la primera letra del segundo nombre, si existe
+        String primeraLetraSegundoNombre = partesNombre.length > 1 ? partesNombre[1].substring(0, 1) : "";
+        // Toma el primer apellido completo
+        String primerApellido = partesApellido.length > 0 ? partesApellido[0] : "";
 
-        // Genera el email usando las iniciales y el apellido
-        String email = String.format("%s%s@uce.edu.ec", iniciales.toString(), apellido).toLowerCase();
+        // Genera el email
+        String email = String.format("%s%s%s@uce.edu.ec",
+                primeraLetraNombre.toLowerCase(),
+                primeraLetraSegundoNombre.toLowerCase(),
+                primerApellido.toLowerCase());
+
         return email;
+    }
+
+    @Override
+    public boolean existsByCedula(String cedula) {
+        return this.iEstudianteRepository.existsByCedula(cedula);
     }
 
 }

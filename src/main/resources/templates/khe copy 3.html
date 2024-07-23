@@ -12,15 +12,15 @@
 <body class="d-flex justify-content-center align-items-center vh-100 bg-ligh">
   <div class="text-center">
 
-    <h2 class="mb-3">Ud ha solicitado unirse a Liceo Central de Ciencias y Arte, <span
-        th:text="${nombre}">nombre-representante</span></h2>
+    <h2 class="mb-3">Hemos iniciado el proceso de matriculacion de <span th:text="${nombreE}">nombre-estudiante</span><br>Ahora estamos en contacto</h2>
 
     <p class="text-black fs-3">
-      Revise su correo electronico con la información presentada
+      Revise tu correo electronico con la información presentada
     </p>
+    <img src="/images/mascota_transiciones.png" alt="mascota transicion" class="mascotaTransicion-img">
 
-    <form th:action="@{/menu/botones}">
-      <input class="btn btn-primary w-25" type="submit" value="HOME" />
+    <form th:action="@{/representantes/cuentaR}">
+      <input class="btn btn-primary w-25" type="submit" value="VOLVER"/>
     </form>
   </div>
 </body>

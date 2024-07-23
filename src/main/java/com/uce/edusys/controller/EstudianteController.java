@@ -25,10 +25,10 @@ public class EstudianteController {
 	}
 
     // http://localhost:8080/estudiantes/login
-	@GetMapping("/login")
-	public String vistaEstudiantes() {
-		return "vistaIniciarSesionEstudiante";
-	}
+	// @GetMapping("/login")
+	// public String vistaEstudiantes() {
+	// 	return "vistaIniciarSesionEstudiante";
+	// }
 
 	// http://localhost:8080/estudiantes/cuentaE
 	@GetMapping("/cuentaE")
