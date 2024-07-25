@@ -8,7 +8,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.uce.edusys.configuracion.EmailService;
 import com.uce.edusys.configuracion.seguridad.IRolRepository;
 import com.uce.edusys.repository.IEstudianteRepository;
 import com.uce.edusys.repository.modelo.Estudiante;
@@ -20,15 +19,13 @@ public class EstudianteServiceImpl implements IEstudianteService {
     private final IEstudianteRepository iEstudianteRepository;
     private final IRolRepository iRolRepository;
     private final PasswordEncoder passwordEncoder;
-    private final EmailService emailService;
 
     @Autowired
     public EstudianteServiceImpl(IEstudianteRepository estudianteRepository, IRolRepository iRolRepository,
-            PasswordEncoder passwordEncoder, EmailService emailService) {
+            PasswordEncoder passwordEncoder) {
         this.iEstudianteRepository = estudianteRepository;
         this.iRolRepository = iRolRepository;
         this.passwordEncoder = passwordEncoder;
-        this.emailService = emailService;
     }
 
     @Override

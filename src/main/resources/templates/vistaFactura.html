@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeLeaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="/static/JS/html2pdf.bundle.min.js"></script>
+  <title>Factura</title>
+  <style>
+    .card {
+      width: 100%;
+      max-width: 36rem;
+      margin: auto;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header,
+    .card-content,
+    .card-footer {
+      padding: 1rem;
+    }
+
+    .card-header {
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .card-content {
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .flex {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+
+    .text-lg {
+      font-size: 1.125rem;
+      font-weight: 500;
+    }
+
+    .text-sm {
+      font-size: 0.875rem;
+    }
+
+    .font-medium {
+      font-weight: 500;
+    }
+
+    .text-muted-foreground {
+      color: #6b7280;
+    }
+
+    .grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .grid-cols-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .my-6 {
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .mt-6 {
+      margin-top: 1.5rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 0.5rem;
+      border: 1px solid #e5e7eb;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f3f4f6;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .mt-6 {
+      margin-top: 1.5rem;
+    }
+
+    .btn-blue {
+      background-color: #007bff;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 0.25rem;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn-blue:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card" id="factura">
+    <div class="card-header">
+      <div class="flex">
+        <div>
+          <img src="/images/logotipo.png" alt="Logo" style="max-width: 200px;">
+        </div>
+        <div class="text-right">
+          <p class="font-medium">Datos de la Escuela</p>
+          <p class="font-medium">Liceo Central de Ciencias y Arte</p>
+          <p class="text-muted-foreground">RUC: 1717181819001</p>
+          <p class="text-muted-foreground">Direc: Gaspar de Carvajal y Gilberto Sobral</p>
+          <p class="text-muted-foreground">Telf: 2022-1234</p>
+          <p class="text-muted-foreground">Email: info@liceocentral.edu.ec</p>
+        </div>
+      </div>
+    </div>
+    <div class="card-content">
+      <div class="grid grid-cols-2">
+        <div>
+          <h2 class="text-lg font-medium">Datos del cliente</h2>
+          <div class="space-y-1 text-sm">
+            <p>Nombre: <span th:text="${representante.nombre}">Nombre del representante</span></p>
+            <p>Cédula: <span th:text="${representante.cedula}">Cédula del representante</span></p>
+            <p>Dirección: <span th:text="${representante.direccion}">Dirección del representante</span></p>
+            <p>Teléfono: <span th:text="${representante.telefono}">Teléfono del representante</span></p>
+            <p>Email: <span th:text="${representante.email}">Email del representante</span></p>
+          </div>
+        </div>
+        <div class="text-right">
+          <h2 class="text-lg font-medium">Detalles de la factura</h2>
+          <div class="space-y-1 text-sm">
+            <p>Número Factura: 001 001 0012345</p>
+            <p>Fecha de emisión: <span id="fecha-emision"></span></p>
+          </div>
+        </div>
+      </div>
+      <hr class="my-6">
+      <table>
+        <thead>
+          <tr>
+            <th>Detalle</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Matriculación</td>
+            <td>1</td>
+            <td th:text="${matricula.ofertaAcademica.precio}">$ 300.00</td>
+            <td th:text="${matricula.ofertaAcademica.precio}">$ 300.00</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="grid grid-cols-2 mt-6">
+        <div>
+          <p class="text-muted-foreground">Subtotal:</p>
+          <p class="text-muted-foreground">Impuestos (15%):</p>
+          <p class="font-medium">Total:</p>
+        </div>
+        <div class="text-right">
+          <p th:text="${matricula.ofertaAcademica.precio}">$ 300.00</p>
+          <p>$ 0</p>
+          <p th:text="${matricula.ofertaAcademica.precio}">$ 300.00</p>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer text-right">
+      <p class="text-muted-foreground text-sm">Gracias por su confianza.</p>
+    </div>
+  </div>
+
+  <div class="card-footer text-right">
+    <button onclick="downloadPDF()" class="btn-blue">Descargar Factura</button>
+  </div>
+
+  <script>
+    function downloadPDF() {
+      var element = document.getElementById('factura');
+      html2pdf(element, {
+        margin: 1,
+        filename: 'factura.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, logging: true, dpi: 192, letterRendering: true },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      });
+    }
+
+    // Obtener la fecha local del computador
+    const fechaActual = new Date();
+    const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
+    const fechaFormateada = fechaActual.toLocaleDateString('es-ES', opciones);
+
+    // Insertar la fecha en el elemento con id "fecha-emision"
+    document.getElementById('fecha-emision').textContent = fechaFormateada;
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+</body>
+
+</html>

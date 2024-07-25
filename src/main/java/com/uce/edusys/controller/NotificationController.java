@@ -16,13 +16,10 @@ public class NotificationController {
     @Autowired
     private EmailService emailService;
 
-    // Dirección de correo predefinida a la cual se enviarán todos los correos (LICEO CENTRAL)
-    private final String predefinedEmail = "andrescalvache47@gmail.com";
-
     @PostMapping("/send-email")
     public ResponseEntity<String> sendEmail(@RequestBody EmailRequest request) {
         try {
-            emailService.sendSimpleMessage(request.getFromEmail(), predefinedEmail, request.getSubject(),
+            emailService.sendSimpleMessage(request.getFromEmail(), request.getToEmail(), request.getSubject(),
                     request.getBody());
             return ResponseEntity.ok("Email sent successfully");
         } catch (Exception e) {

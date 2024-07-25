@@ -68,21 +68,21 @@ public class DataInitializer implements CommandLineRunner {
             OfertaAcademica oferta4 = new OfertaAcademica();
             oferta4.setNombre("D1");
             oferta4.setDescripcion("1ro de Bachillerato");
-            oferta4.setPrecio(BigDecimal.valueOf(200));
+            oferta4.setPrecio(BigDecimal.valueOf(400));
             oferta4.setHora(horaD);
             this.iOfertaAcademicaRepository.save(oferta4);
 
             OfertaAcademica oferta5 = new OfertaAcademica();
             oferta5.setNombre("D2");
             oferta5.setDescripcion("2do de Bachillerato");
-            oferta5.setPrecio(BigDecimal.valueOf(250));
+            oferta5.setPrecio(BigDecimal.valueOf(450));
             oferta5.setHora(horaD);
             this.iOfertaAcademicaRepository.save(oferta5);
 
             OfertaAcademica oferta6 = new OfertaAcademica();
             oferta6.setNombre("D3");
             oferta6.setDescripcion("3ro de Bachillerato");
-            oferta6.setPrecio(BigDecimal.valueOf(300));
+            oferta6.setPrecio(BigDecimal.valueOf(500));
             oferta6.setHora(horaD);
             this.iOfertaAcademicaRepository.save(oferta6);
         }

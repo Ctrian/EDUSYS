@@ -31,7 +31,7 @@ public class EmailService {
             message.setTo(toEmail);
             message.setSubject(subject);
             message.setText(body);
-            javaMailSender.send(message);
+            javaMailSender.send(message);        
         } catch (MailException e) {
             throw new RuntimeException("Failed to send email", e);
         }
@@ -82,8 +82,9 @@ public class EmailService {
             message.setText(
                     "Felicitaciones a pasado la selección y entrevista personal \nEl siguiente paso es MATRICULAR\n" +
                             "\n" +
-                            "Te recomendamos ver nuestras ofertas académicas aquí ->" + linkHome + "\n" +
-                            "Puedes dirigirte al proceso MATRICULA directamente desde aquí ->" + linkMatricula + "\n" +
+                            "Te recomendamos ver nuestras ofertas académicas aquí -> " + linkHome + " \n" +
+                            "Puedes dirigirte al proceso MATRICULA directamente desde aquí -> " + linkMatricula + " \n"
+                            +
                             "Saludos,\nEquipo de cuentas de Liceo Central de Ciencias y Arte");
             javaMailSender.send(message);
         } catch (MailException e) {
@@ -138,7 +139,7 @@ public class EmailService {
                             "Contraseña: " + estudiante.getPassword() + "\n" +
                             "Por su seguridad, le recomendamos encarecidamente que como primera acción cambie la contraseña de usuario a una propia"
                             + "\n" +
-                            "Ahora puedes dirigirte al proceso PAGOS aqui ->" + linkPagos + "\n" +
+                            "Ahora puedes dirigirte al proceso PAGOS aqui -> " + linkPagos + " \n" +
                             "Saludos,\nEquipo de cuentas de Liceo Central de Ciencias y Arte");
             javaMailSender.send(message);
         } catch (MailException e) {

@@ -10,6 +10,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 @Configuration
 public class MailConfig {
 
+    // Definir el email por defecto de la institución
     private static final String emailLiceo = "andrescalvache47@gmail.com";
 
     @Bean
@@ -19,7 +20,7 @@ public class MailConfig {
         mailSender.setPort(587);
 
         mailSender.setUsername(emailLiceo);
-        mailSender.setPassword("uumxnpvcywhokias");
+        mailSender.setPassword("stpjbswlwpnhzhlc");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");

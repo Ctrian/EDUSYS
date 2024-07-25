@@ -191,3 +191,17 @@ document.querySelectorAll('input[name="offer"]').forEach(function (input) {
     });
 });
 
+// Caractéres aleatorios de matrícula
+document.addEventListener('DOMContentLoaded', function () {
+    const matriculaId = generateRandomId(6);
+    document.getElementById('matriculaId').value = matriculaId;
+});
+
+function generateRandomId(length) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+}

@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.uce.edusys.repository.IMatriculaRepository;
 import com.uce.edusys.repository.IPagoRepository;
-import com.uce.edusys.repository.modelo.Matricula;
 import com.uce.edusys.repository.modelo.Pago;
 
 @Service
@@ -37,7 +35,6 @@ public class PagoServiceImpl implements IPagoService {
 
 	@Override
 	public List<Pago> obtenerPagosPorRepresentante(Integer representanteId) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

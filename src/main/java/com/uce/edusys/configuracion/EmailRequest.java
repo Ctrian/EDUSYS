@@ -8,7 +8,6 @@ public class EmailRequest {
     private String body;
 
     //get y set
-
     public String getToEmail() {
         return toEmail;
     }

@@ -64,7 +64,9 @@ public class WebSecurity {
                                                                 "/representantes/registrarE",
                                                                 "/representantes/estadoRegistro",
                                                                 "/representantes/matricular", "/representantes/enviado",
-                                                                "/representantes/pagos")
+                                                                "/representantes/pagos", "/representantes/pago",
+                                                                "/representantes/descargarFactura",
+                                                                "/representantes/vistaFactura")
                                                 .hasRole("REPRESENTANTE")
                                                 .requestMatchers("/personal/cuentaPer")
                                                 .hasAnyRole("PERSONAL")

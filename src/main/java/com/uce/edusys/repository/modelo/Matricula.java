@@ -1,6 +1,5 @@
 package com.uce.edusys.repository.modelo;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,6 +9,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -34,7 +34,11 @@ public class Matricula {
 	@Column(name = "matr_fecha")
 	private LocalDateTime fecha = LocalDateTime.now();
 
+	@Column(name = "matr_pago")
+	private String estadoPago;
+
 	// estado de la matricula
+	@Column(name = "matr_estado")
 	@Enumerated(EnumType.STRING)
 	private EstadoMatricula estado;
 
@@ -89,11 +93,10 @@ public class Matricula {
 	@JoinColumn(name = "matr_id_curso")
 	private Curso curso;
 
-	@OneToMany(mappedBy = "matricula", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "matricula", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Pago> pagos;
 
 	// get y set
-
 	public Integer getId() {
 		return id;
 	}
@@ -214,14 +217,6 @@ public class Matricula {
 		this.bdEstudiante = bdEstudiante;
 	}
 
-	public EstadoMatricula getEstado() {
-		return estado;
-	}
-
-	public void setEstado(EstadoMatricula estado) {
-		this.estado = estado;
-	}
-
 	public OfertaAcademica getOfertaAcademica() {
 		return ofertaAcademica;
 	}
@@ -236,6 +231,22 @@ public class Matricula {
 
 	public void setPagos(List<Pago> pagos) {
 		this.pagos = pagos;
+	}
+
+	public String getEstadoPago() {
+		return estadoPago;
+	}
+
+	public void setEstadoPago(String estadoPago) {
+		this.estadoPago = estadoPago;
+	}
+
+	public EstadoMatricula getEstado() {
+		return estado;
+	}
+
+	public void setEstado(EstadoMatricula estado) {
+		this.estado = estado;
 	}
 
 	// Método para actualizar el estado de la matrícula basado en los pagos

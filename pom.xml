@@ -78,6 +78,10 @@
    			<version>6.3.0</version>
     	</dependency>
 		<!-- Generar el PDF -->
+		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
         <dependency>
             <groupId>org.xhtmlrenderer</groupId>
             <artifactId>flying-saucer-core</artifactId>
@@ -88,7 +92,7 @@
             <artifactId>flying-saucer-pdf-itext5</artifactId>
             <version>9.1.20</version>
         </dependency>
-	</dependencies>
+ </dependencies>
 
 	<build>
 		<plugins>

@@ -1,6 +1,7 @@
 package com.uce.edusys.controller;
 
 import java.time.LocalDate;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.uce.edusys.configuracion.EmailService;
 import com.uce.edusys.configuracion.seguridad.IRolRepository;
 import com.uce.edusys.configuracion.seguridad.TokenService;
-import com.uce.edusys.repository.modelo.Curso;
+import com.uce.edusys.repository.modelo.EstadoMatricula;
 import com.uce.edusys.repository.modelo.Estudiante;
 import com.uce.edusys.repository.modelo.Factura;
 import com.uce.edusys.repository.modelo.Matricula;
@@ -32,7 +33,6 @@ import com.uce.edusys.repository.modelo.OfertaAcademica;
 import com.uce.edusys.repository.modelo.Representante;
 import com.uce.edusys.repository.modelo.Rol;
 import com.uce.edusys.repository.modelo.SolicitudMatricula;
-import com.uce.edusys.service.ICursoService;
 import com.uce.edusys.service.IEstudianteService;
 import com.uce.edusys.service.IFacturaService;
 import com.uce.edusys.service.IMatriculaService;
@@ -155,13 +155,6 @@ public class RepresentanteController {
 		}
 	}
 
-	@GetMapping("/validarCedula")
-	@ResponseBody
-	public ResponseEntity<Boolean> validarCedula(@RequestParam("cedula") String cedula) {
-		boolean exists = iEstudianteService.existsByCedula(cedula);
-		return ResponseEntity.ok(exists);
-	}
-
 	// http://localhost:8080/representantes/estadoRegistro
 	@PostMapping("/estadoRegistro")
 	public String peticionRegistro(@ModelAttribute("estudiante") Estudiante estudiante,
@@ -252,16 +245,24 @@ public class RepresentanteController {
 			@RequestParam("estudianteId") Integer estudianteId,
 			Authentication authentication,
 			Model model) {
+
 		if (authentication != null && authentication.isAuthenticated()
 				&& !(authentication instanceof AnonymousAuthenticationToken)) {
 			try {
 				String email = authentication.getName();
 				Representante representante = this.iRepresentanteService.encontrarPorEmail(email);
 
+				OfertaAcademica oferta = this.iOfertaAcademicaService.encontrarOF(ofertaAcademicaId);
+
+				if (oferta == null) {
+					System.out.println("OFERTA NO ENCONTRADA");
+				}
+
 				this.iMatriculaService.registrarM(ofertaAcademicaId, estudianteId, representante.getId());
 
+				model.addAttribute("offer", oferta);
 				model.addAttribute("mensaje", "Matriculación exitosa y correo enviado.");
-				return "redirect:/representantes/cuentaR?success=true";
+				return "khe copy 3";
 			} catch (Exception e) {
 				e.printStackTrace();
 				return "redirect:/representantes/cuentaR?error=true";
@@ -269,6 +270,158 @@ public class RepresentanteController {
 		} else {
 			return "redirect:/representantes/cuentaR";
 		}
+	}
+
+	// http://localhost:8080/representantes/pagos
+	@GetMapping("/pagos")
+	public String vistaRepresentantePagos(Authentication authentication, Model model) {
+		if (authentication != null && authentication.isAuthenticated()
+				&& !(authentication instanceof AnonymousAuthenticationToken)) {
+			try {
+				String email = authentication.getName();
+				Representante representante = iRepresentanteService.encontrarPorEmail(email);
+				Matricula matricula = iMatriculaService.encontrarM(representante.getId());
+				OfertaAcademica oferta = this.iOfertaAcademicaService.encontrarOF(1);
+
+				model.addAttribute("oferta", oferta);
+				model.addAttribute("matricula", matricula);
+				return "test";
+			} catch (Exception e) {
+				return "redirect:/representantes/pagos?error=true";
+			}
+		}
+		return "redirect:/representantes/pagos";
+	}
+
+	@PostMapping("/pago")
+	public String realizarPago(Authentication authentication, @RequestParam("matriculaId") Integer matriculaId,
+			@RequestParam("amount") BigDecimal amount) {
+		if (authentication != null && authentication.isAuthenticated()
+				&& !(authentication instanceof AnonymousAuthenticationToken)) {
+			try {
+				Matricula matricula = this.iMatriculaService.encontrarM(matriculaId);
+				if (matricula != null) {
+					matricula.setEstado(EstadoMatricula.MATRICULADO);
+					matricula.setEstadoPago("pagado");
+					this.iMatriculaService.actualizarM(matricula);
+
+					// Aquí podrías generar una factura y devolverla al usuario
+					return "redirect:/representantes/pagos?success=true";
+				} else {
+					return "redirect:/representantes/pagos?error=true";
+				}
+			} catch (Exception e) {
+				return "redirect:/representantes/pagos?error=true";
+			}
+		}
+		return "redirect:/representantes/pagos";
+	}
+
+	@GetMapping("/descargarFactura")
+	public String descargarFactura(Authentication authentication, @RequestParam("matriculaId") Integer matriculaId,
+			Model model) {
+
+		// Verificar si el usuario está autenticado
+		if (authentication != null && authentication.isAuthenticated()
+				&& !(authentication instanceof AnonymousAuthenticationToken)) {
+			try {
+				// Obtener la información de la matrícula y representante
+				Matricula matricula = iMatriculaService.encontrarM(matriculaId);
+				Representante representante = matricula.getRepresentante();
+
+				// Agregar los datos al modelo
+				model.addAttribute("matricula", matricula);
+				model.addAttribute("representante", representante);
+
+				return "vistaFactura";
+
+			} catch (Exception e) {
+				// Manejar excepciones (por ejemplo, matrícula no encontrada)
+				return "redirect:/representantes/pagos"; // O redirigir a una página de error
+			}
+		} else {
+			return "redirect:/representantes/login";
+		}
+	}
+
+	@GetMapping("/vistaFactura")
+    public String vistaFactura(Authentication authentication, @RequestParam("matriculaId") Integer matriculaId, Model model) {
+
+		// Verificar si el usuario está autenticado
+		if (authentication != null && authentication.isAuthenticated()
+				&& !(authentication instanceof AnonymousAuthenticationToken)) {
+					String email = authentication.getName();
+			try {
+				// Obtén la información de la matrícula y factura
+				Matricula matricula = this.iMatriculaService.encontrarM(matriculaId);
+				Representante representante = iRepresentanteService.encontrarPorEmail(email);
+				// Factura factura = matriculaService.generarFactura(matricula); // Implementa la lógica para generar la factura
+		
+				model.addAttribute("matricula", matricula);
+				model.addAttribute("representante", representante);
+				// model.addAttribute("factura", factura);
+		
+				return "vistaFactura"; // Nombre del archivo HTML de la vista
+
+			} catch (Exception e) {
+				// Manejar excepciones (por ejemplo, matrícula no encontrada)
+				return "redirect:/representantes/pagos"; // O redirigir a una página de error
+			}
+		} else {
+			return "redirect:/representantes/login";
+		}
+    }
+
+	// http://localhost:8080/representantes/pagos/factura
+	@GetMapping("/pagos/factura")
+	public String mostrarFactura(Model model, Authentication authentication) {
+		if (authentication != null && authentication.isAuthenticated()
+				&& !(authentication instanceof AnonymousAuthenticationToken)) {
+			String email = authentication.getName();
+			try {
+				Representante representante = iRepresentanteService.encontrarPorEmail(email);
+				// Suponiendo que tienes un método para obtener la factura, por ejemplo:
+				Factura factura = iFacturaService.obtenerFacturaPorRepresentante(representante.getId());
+
+				model.addAttribute("representante", representante);
+				model.addAttribute("factura", factura);
+
+				return "vistaFactura";
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				return "redirect:/representantes/login?error=true";
+			}
+		} else {
+			return "redirect:/representantes/login";
+		}
+	}
+
+	// http://localhost:8080/representantes/pagos/pendiente
+	@GetMapping("/pagos/pendiente")
+	public String mostrarFacturaPendiente(Model model, Authentication authentication) {
+		// Lógica para mostrar la factura pendiente
+		return "vistaFacturaPendiente";
+	}
+
+	// http://localhost:8080/representantes/pagos/exitoso
+	@GetMapping("/pagos/exitoso")
+	public String mostrarFacturaPagoExitoso(Model model, Authentication authentication) {
+		// Lógica para mostrar la factura de pago exitoso
+		return "pago-exito";
+	}
+
+	// http://localhost:8080/representantes/listar
+	@GetMapping("listar")
+	public String listarRepresentantes(@RequestParam(name = "page", defaultValue = "0") int page,
+			@RequestParam(name = "size", defaultValue = "10") int size,
+			Model model) {
+		@SuppressWarnings("unchecked")
+		Page<Representante> representantes = (Page<Representante>) iRepresentanteService.encontrarTodos();
+		model.addAttribute("representantes", representantes.getContent());
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", representantes.getTotalPages());
+		return "listarRepresentantes";
 	}
 
 	// http://localhost:8080/representantes/tyc
@@ -342,61 +495,11 @@ public class RepresentanteController {
 		return "vistaIniciarSesionRepresentante";
 	}
 
-	// http://localhost:8080/representantes/pagos
-	@GetMapping("/pagos")
-	public String vistaRepresentantePagos() {
-		return "test";
-	}
-
-	// http://localhost:8080/representantes/pagos/factura
-	@GetMapping("/pagos/factura")
-	public String mostrarFactura(Model model, Authentication authentication) {
-	    if (authentication != null && authentication.isAuthenticated()
-	            && !(authentication instanceof AnonymousAuthenticationToken)) {
-	        String email = authentication.getName();
-	        try {
-	            Representante representante = iRepresentanteService.encontrarPorEmail(email);
-	            // Suponiendo que tienes un método para obtener la factura, por ejemplo:
-	            Factura factura = iFacturaService.obtenerFacturaPorRepresentante(representante.getId());
-
-	            model.addAttribute("representante", representante);
-	            model.addAttribute("factura", factura);
-
-	            return "vistaFactura";
-	            
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	            return "redirect:/representantes/login?error=true";
-	        }
-	    } else {
-	        return "redirect:/representantes/login";
-	    }
-	}
-
-	// http://localhost:8080/representantes/pagos/pendiente
-    @GetMapping("/pagos/pendiente")
-    public String mostrarFacturaPendiente(Model model, Authentication authentication) {
-        // Lógica para mostrar la factura pendiente
-        return "vistaFacturaPendiente";
-    }
-    //http://localhost:8080/representantes/pagos/exitoso
-    @GetMapping("/pagos/exitoso")
-    public String mostrarFacturaPagoExitoso(Model model, Authentication authentication) {
-        // Lógica para mostrar la factura de pago exitoso
-        return "pago-exito";
-    }
-
-	// http://localhost:8080/representantes/listar
-	@GetMapping("listar")
-	public String listarRepresentantes(@RequestParam(name = "page", defaultValue = "0") int page,
-			@RequestParam(name = "size", defaultValue = "10") int size,
-			Model model) {
-		@SuppressWarnings("unchecked")
-		Page<Representante> representantes = (Page<Representante>) iRepresentanteService.encontrarTodos();
-		model.addAttribute("representantes", representantes.getContent());
-		model.addAttribute("currentPage", page);
-		model.addAttribute("totalPages", representantes.getTotalPages());
-		return "listarRepresentantes";
+	@GetMapping("/validarCedula")
+	@ResponseBody
+	public ResponseEntity<Boolean> validarCedula(@RequestParam("cedula") String cedula) {
+		boolean exists = iEstudianteService.existsByCedula(cedula);
+		return ResponseEntity.ok(exists);
 	}
 
 	/*

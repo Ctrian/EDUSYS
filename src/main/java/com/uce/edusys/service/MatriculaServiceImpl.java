@@ -8,6 +8,7 @@ import com.uce.edusys.repository.IEstudianteRepository;
 import com.uce.edusys.repository.IMatriculaRepository;
 import com.uce.edusys.repository.IOfertaAcademicaRepository;
 import com.uce.edusys.repository.IRepresentanteRepository;
+import com.uce.edusys.repository.modelo.EstadoMatricula;
 import com.uce.edusys.repository.modelo.Estudiante;
 import com.uce.edusys.repository.modelo.Matricula;
 import com.uce.edusys.repository.modelo.OfertaAcademica;
@@ -34,7 +35,6 @@ public class MatriculaServiceImpl implements IMatriculaService {
     @Override
     @Transactional
     public void registrarM(Integer ofertaAcademicaId, Integer estudianteId, Integer representanteId) {
-        
         Estudiante estudiante = this.iEstudianteRepository.findById(estudianteId)
                 .orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
         OfertaAcademica ofertaAcademica = this.iOfertaAcademicaRepository.findById(ofertaAcademicaId)
@@ -46,14 +46,19 @@ public class MatriculaServiceImpl implements IMatriculaService {
         matricula.setEstudiante(estudiante);
         matricula.setOfertaAcademica(ofertaAcademica);
         matricula.setRepresentante(representante);
-
+        matricula.setEstadoPago("Pago pendiente");
+        matricula.setEstado(EstadoMatricula.NO_MATRICULADO);
         this.iMatriculaRepository.save(matricula);
     }
 
     @Override
     @Transactional
     public void actualizarM(Matricula matricula) {
-        this.iMatriculaRepository.save(matricula);
+        // matricula.setId(this.iMatriculaRepository.findById(matricula.getId()));
+        // if (matricula != null) {
+        //     matricula.setEstado(null);
+        //     this.iMatriculaRepository.save(matricula);
+        // }
     }
 
     @Override

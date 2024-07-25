@@ -22,13 +22,11 @@ public class FacturaServiceImpl implements IFacturaService {
 
     @Override
     public Factura obtenerFacturaPorId(Integer id) {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public Factura obtenerFacturaPorRepresentante(Integer id) {
-        // TODO Auto-generated method stub
         return null;
     }
 }

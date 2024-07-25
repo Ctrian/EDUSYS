@@ -5,22 +5,20 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>INSCRIPCIÓN ENVIADA</title>
+  <title>MATRICULA</title>
   <link rel="stylesheet" href="/static/css/bootstrap.min.css">
 </head>
 
 <body class="d-flex justify-content-center align-items-center vh-100 bg-ligh">
   <div class="text-center">
 
-    <h2 class="mb-3">Hemos iniciado el proceso de matriculacion de <span th:text="${nombreE}">nombre-estudiante</span><br>Ahora estamos en contacto</h2>
+    <h2 class="mb-3">La matrícula de <span th:text="${nombreE}">nombre-estudiante</span> esta casi completa<br>Ahora dirígete a
+      PAGOS para completar el proceso de matriculación</h2>
 
-    <p class="text-black fs-3">
-      Revise tu correo electronico con la información presentada
-    </p>
     <img src="/images/mascota_transiciones.png" alt="mascota transicion" class="mascotaTransicion-img">
 
-    <form th:action="@{/representantes/cuentaR}">
-      <input class="btn btn-primary w-25" type="submit" value="VOLVER"/>
+    <form th:action="@{/representantes/pagos}">
+      <input class="btn btn-primary w-25" type="submit" value="PAGOS" />
     </form>
   </div>
 </body>
